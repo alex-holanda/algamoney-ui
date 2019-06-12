@@ -1,5 +1,5 @@
 <div class="container">
-  <form>
+  <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="salvar()">
 
     <div class="ui-g">
 
@@ -8,49 +8,63 @@
       </div>
 
       <div class="ui-g-12">
-        <p-selectButton [options]="tipos" #tipo></p-selectButton>
+        <p-selectButton id="tipo" formControlName="tipo" [options]="tipos"></p-selectButton>
       </div>
 
       <div class="ui-g-6 ui-md-3 ui-fluid">
         <label>Vencimento</label>
-        <p-calendar dateFormat="dd/mm/yy"
-          [readonlyInput]="false" [showIcon]="false"></p-calendar>
+        <p-calendar id="vencimento" formControlName="dataVencimento"
+          dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false"
+          [showIcon]="false"></p-calendar>
+
+        <app-message [control]="formulario.get('dataVencimento')" error="required" text="Informe uma data de vencimento"></app-message>
       </div>
 
       <div class="ui-g-6 ui-md-3 ui-fluid">
-        <label>{{ tipo.value === 'RECEITA' ? 'Recebimento' : 'Pagamento' }}</label>
-        <p-calendar dateFormat="dd/mm/yy"></p-calendar>
+        <label>{{ formulario.get('tipo').value === 'RECEITA' ? 'Recebimento' : 'Pagamento' }}</label>
+        <p-calendar id="dataPagamento" formControlName="dataPagamento"
+          dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false"
+          [showIcon]="false"></p-calendar>
       </div>
 
       <div class="ui-g-12 ui-md-9 ui-fluid">
         <label>Descrição</label>
-        <input pInputText type="text"/>
+        <input pInputText type="text" id="descricao" formControlName="descricao"/>
+
+        <app-message [control]="formulario.get('descricao')" error="obrigatoriedade"
+          text="Informe uma data de vencimento"></app-message>
+        <app-message [control]="formulario.get('descricao')" error="validarTamanhoMinimo"
+          text="Mínimo de {{ formulario.get('descricao').errors?.tamanhoMinimo?.tamanho }} caracteres"></app-message>
       </div>
 
       <div class="ui-g-12 ui-md-3 ui-fluid">
         <label>Valor</label>
         <input pInputText type="text"
           currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }"
-          placeholder="0,00"/>
+          placeholder="0,00" id="valor" formControlName="valor"/>
       </div>
 
       <div class="ui-g-12 ui-md-6 ui-fluid">
         <label>Categoria</label>
-        <p-dropdown [options]="categorias" placeholder="Selecione"></p-dropdown>
+        <p-dropdown [options]="categorias" placeholder="Selecione"
+          id="categoria" formControlName="codigo"></p-dropdown>
       </div>
 
       <div class="ui-g-12 ui-md-6 ui-fluid">
         <label>Pessoa</label>
-        <p-dropdown [options]="pessoas" [filter]="true" placeholder="Selecione"></p-dropdown>
+        <p-dropdown [options]="pessoas" [filter]="true" placeholder="Selecione"
+          id="pessoa" formControlName="codigo"></p-dropdown>
       </div>
 
       <div class="ui-g-12 ui-fluid">
         <label>Observação</label>
-        <textarea pInputTextarea rows="3"></textarea>
+        <textarea pInputTextarea rows="3" id="observacao" formControlName="observacao"></textarea>
       </div>
 
       <div class="ui-g-12">
-        <button pButton type="submit" label="Salvar" class="ui-button-primary" style="margin-right: 5px"></button>
+        <button pButton type="submit" label="Salvar" class="ui-button-primary" style="margin-right: 5px"
+          [disabled]="formulario.invalid"></button>
+
         <button pButton type="button" label="Info" class="ui-button-info" style="margin-right: 5px"></button>
         <a href="javascript:;">Voltar para a pesquisa</a>
       </div>
