@@ -1,5 +1,5 @@
 <div class="container">
-  <form>
+  <form (ngSubmit)="salvar()" [formGroup]="formulario">
     <div class="ui-g">
       <div class="ui-g-12">
         <h1>Nova Pessoa</h1>
@@ -7,46 +7,49 @@
 
       <div class="ui-g-12 ui-fluid">
         <label>Nome</label>
-        <input pInputText type="text"/>
+        <app-message [control]="formulario.get('nome')"
+          error="required"
+          text="Informe o nome"></app-message>
+        <input pInputText type="text" id="nome" formControlName="nome" class="ng-dirty ng-invalid"/>
       </div>
 
       <div class="ui-g-12 ui-md-9 ui-fluid">
         <label>Logradouro</label>
-        <input pInputText type="text"/>
+        <input pInputText type="text" id="logradouro" formControlName="logradouro"/>
       </div>
 
       <div class="ui-g-12 ui-md-3 ui-fluid">
         <label>Número</label>
-        <input pInputText type="text"/>
+        <input pInputText type="text" id="numero" formControlName="numero"/>
       </div>
 
       <div class="ui-g-12 ui-md-4 ui-fluid">
-        <label>Complement</label>
-        <input pInputText type="text"/>
+        <label>Complemento</label>
+        <input pInputText type="text" id="complemento" formControlName="complemento"/>
       </div>
 
       <div class="ui-g-12 ui-md-4 ui-fluid">
         <label>Bairro</label>
-        <input pInputText type="text"/>
+        <input pInputText type="text" id="bairro" formControlName="bairro"/>
       </div>
 
       <div class="ui-g-12 ui-md-4 ui-fluid">
         <label>CEP</label>
-        <p-inputMask mask="99.999-999"></p-inputMask>
+        <p-inputMask mask="99.999-999" id="cep" formControlName="cep"></p-inputMask>
       </div>
 
       <div class="ui-g-12 ui-md-6 ui-fluid">
         <label>Cidade</label>
-        <input pInputText type="text"/>
+        <input pInputText type="text" id="cidade" formControlName="cidade"/>
       </div>
 
       <div class="ui-g-12 ui-md-6 ui-fluid">
         <label>Estado</label>
-        <input pInputText type="text"/>
+        <input pInputText type="text" id="estado" formControlName="estado"/>
       </div>
 
       <div class="ui-g-12">
-          <button pButton type="submit" label="Salvar" class="ui-button-primary" style="margin-right: 5px"></button>
+          <p-button [disabled]="formulario.invalid" type="submit" label="Salvar" class="ui-button-primary" style="margin-right: 5px"></p-button>
           <button pButton type="button" label="Novo" class="ui-button-info" style="margin-right: 5px"></button>
           <a href="javascript:;">Voltar para a pesquisa</a>
       </div>

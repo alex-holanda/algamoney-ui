@@ -48,8 +48,14 @@ export class LancamentoCadastroComponent implements OnInit {
       dataPagamento: [],
       descricao: [null, [ this.validarObrigatoriedade, this.validarTamanhoMinimo(5) ]],
       valor: [null, Validators.required],
-      pessoa: [],
-      categoria: [],
+      pessoa: this.formBuilder.group({
+        codigo: [null, Validators.required],
+        nome: []
+      }),
+      categoria: this.formBuilder.group({
+        codigo: [null, Validators.required],
+        nome: []
+      }),
       observacao: []
     });
   }
