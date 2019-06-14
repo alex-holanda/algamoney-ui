@@ -7,7 +7,7 @@
 
       <div class="ui-g-12 ui-fluid">
         <label>Nome</label>
-        <app-message [control]="formulario.get('nome')"
+          <app-message [control]="formulario.get('nome')"
           error="required"
           text="Informe o nome"></app-message>
         <input pInputText type="text" id="nome" formControlName="nome" class="ng-dirty ng-invalid"/>
@@ -49,8 +49,8 @@
       </div>
 
       <div class="ui-g-12">
-          <p-button [disabled]="formulario.invalid" type="submit" label="Salvar" class="ui-button-primary" style="margin-right: 5px"></p-button>
-          <button pButton type="button" label="Novo" class="ui-button-info" style="margin-right: 5px"></button>
+          <p-button [disabled]="formulario.invalid" type="submit" label="Salvar" class="ui-button-primary"></p-button>
+          <p-button type="button" label="Novo" class="ui-button-info"></p-button>
           <a href="javascript:;">Voltar para a pesquisa</a>
       </div>
     </div>
