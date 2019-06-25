@@ -12,7 +12,7 @@
 
   <ng-template pTemplate="body" let-lancamento>
     <tr>
-      <td>{{ lancamento.pessoa }}</td>
+      <td>{{ lancamento.pessoa.nome }}</td>
       <td>{{ lancamento.descricao }}</td>
       <td class="col-data">{{ lancamento.dataVencimento }}</td>
       <td class="col-data">{{ lancamento.dataPagamento }}</td>

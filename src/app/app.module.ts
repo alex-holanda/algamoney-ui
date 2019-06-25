@@ -1,5 +1,7 @@
+import { LancamentoService } from './lancamentos/lancamento.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,12 +17,15 @@ import { PessoasModule } from './pessoas/pessoas.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
 
     LancamentosModule,
     PessoasModule,
     CoreModule
   ],
-  providers: [],
+  providers: [
+    LancamentoService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
