@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
+
+import { LazyLoadEvent } from 'primeng/components/common/api';
+
+import { PessoaService, PessoaFilter } from './../pessoa.service';
 
 @Component({
   selector: 'app-pessoas-pesquisa',
@@ -7,18 +12,43 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PessoasPesquisaComponent implements OnInit {
 
-  pessoas = [
-    { nome: 'Manoel Pinheiro', cidade: 'Uberlândia', estado: 'MG', ativo: true },
-    { nome: 'Sebastião da Silva', cidade: 'São Paulo', estado: 'SP', ativo: false },
-    { nome: 'Carla Souza', cidade: 'Florianópolis', estado: 'SC', ativo: true },
-    { nome: 'Luís Pereira', cidade: 'Curitiba', estado: 'PR', ativo: true },
-    { nome: 'Vilmar Andrade', cidade: 'Rio de Janeiro', estado: 'RJ', ativo: false },
-    { nome: 'Paula Maria', cidade: 'Uberlândia', estado: 'MG', ativo: true }
-  ];
+  totalRegistros = 0;
+  filtro = new PessoaFilter();
+  formulario: FormGroup;
+  pessoas = [];
 
-  constructor() { }
+  constructor(
+    private pessoaService: PessoaService,
+    private formBuilder: FormBuilder
+  ) { }
 
   ngOnInit() {
+    this.configurarFormulario();
   }
 
+  aoMudarPagina(event: LazyLoadEvent) {
+    const pagina = event.first / event.rows;
+    this.pesquisar(pagina);
+  }
+
+  pesquisar(pagina = 0) {
+    this.filtro.pagina = pagina;
+
+    this.filtro.nome = this.formulario.get('nome').value;
+
+    return this.pessoaService.pesquisar(this.filtro)
+      .subscribe(
+        resultado => {
+          this.pessoas = resultado.pessoas;
+          this.totalRegistros = resultado.total;
+        },
+        error => alert('Erro ao carregar a lista de lançamentos ')
+      );
+  }
+
+  private configurarFormulario() {
+    this.formulario = this.formBuilder.group({
+      nome: []
+    });
+  }
 }
