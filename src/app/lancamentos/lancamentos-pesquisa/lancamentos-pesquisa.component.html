@@ -1,30 +1,81 @@
 <div class="container">
   <div class="ui-g">
-    <div class="ui-g-12">
-      <h1>Lançamentos</h1>
-    </div>
 
-    <div class="ui-g-12 ui-fluid">
-      <label>Descrição</label>
-      <input pInputText type="text" />
-    </div>
+    <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="pesquisar()">
 
-    <div class="ui-g-12">
-      <label style="display: block">Vencimento</label>
-      <input pInputText type="text" style="width : 95px"/>
-      até
-      <input pInputText type="text" style="width : 95px"/>
-    </div>
+      <div class="ui-g-12">
+        <h1>Lançamentos</h1>
+      </div>
 
-    <div class="ui-g-12">
-      <button pButton label="Pesquisar" type="submit"></button>
-    </div>
+      <div class="ui-g-12 ui-fluid">
+        <label>Descrição</label>
+        <input formControlName="descricao" pInputText type="text" />
+      </div>
+
+      <div class="ui-g-12">
+        <label style="display: block">Vencimento</label>
+        <p-calendar id="vencimentoInicio" formControlName="dataVencimentoInicio"
+          dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false"
+          [showIcon]="false"></p-calendar>
+        até
+        <p-calendar id="vencimentoFim" formControlName="dataVencimentoFim"
+          dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false"
+          [showIcon]="false"></p-calendar>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton label="Pesquisar" type="submit"></button>
+      </div>
+    </form>
+
   </div>
 
 
   <div class="ui-g">
     <div class="ui-g-12">
-      <app-lancamentos-grid [lancamentos]="lancamentos"></app-lancamentos-grid>
+        <p-table [value]="lancamentos" [responsive]="true"
+          [paginator]="true" [rows]="filtro.itensPorPagina" [lazy]="true"
+          [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)">
+
+            <ng-template pTemplate="caption">
+              Lista de Lançamentos
+            </ng-template>
+
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Pessoa</th>
+                <th>Descrição</th>
+                <th class="col-data">Vencimento</th>
+                <th class="col-data">Pagamento</th>
+                <th class="col-valor">Valor</th>
+                <th class="col-acoes"></th>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-lancamento>
+              <tr>
+                <td>{{ lancamento.pessoa }}</td>
+                <td>{{ lancamento.descricao }}</td>
+                <td class="col-data">{{ lancamento.dataVencimento }}</td>
+                <td class="col-data">{{ lancamento.dataPagamento }}</td>
+                <td class="col-valor" [ngStyle]="{'color' : lancamento.tipo === 'DESPESA' ? 'red' : 'blue'}">
+                  {{ lancamento.valor | number }}
+                </td>
+                <td class="col-acoes">
+                    <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top" style="margin-right: 5px"></a>
+                    <a pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"></a>
+                </td>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td [attr.colspan]="6">
+                       Nenhum lançamento encontrado!
+                    </td>
+                </tr>
+            </ng-template>
+          </p-table>
     </div>
   </div>
 
@@ -34,3 +85,5 @@
     </div>
   </div>
 </div>
+
+<pre>{{ filtro | json }}</pre>
