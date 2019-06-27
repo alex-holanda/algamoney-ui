@@ -68,6 +68,17 @@ export class LancamentoService {
       );
   }
 
+  excluir(codigo: number): Observable<void> {
+    const headers = new HttpHeaders()
+      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+
+    return this.http.delete(`${this.lancamentosUrl}/${codigo}`, { headers })
+      .pipe(
+        catchError(this.handleError),
+        map(() => null)
+      );
+  }
+
   private handleError(error: any): Observable<any> {
     return throwError(error);
   }

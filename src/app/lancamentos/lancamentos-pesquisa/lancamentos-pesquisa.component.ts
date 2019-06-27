@@ -1,6 +1,6 @@
 import { LanmentoFiltro } from './../lancamento.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { LazyLoadEvent } from 'primeng/components/common/api';
 
@@ -39,6 +39,16 @@ export class LancamentosPesquisaComponent implements OnInit {
         resultado => {
           this.totalRegistros = resultado.total;
           this.lancamentos = resultado.lancamentos;
+        },
+        error => alert('Erro ao carregar a lista de lançamentos ')
+      );
+  }
+
+  excluir(lancamento: any) {
+    return this.lancamentoService.excluir(lancamento.codigo)
+      .subscribe(
+        () => {
+          this.pesquisar(0);
         },
         error => alert('Erro ao carregar a lista de lançamentos ')
       );
