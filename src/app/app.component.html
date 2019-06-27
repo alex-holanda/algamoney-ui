@@ -5,3 +5,11 @@
 <router-outlet></router-outlet>
 
 <p-growl></p-growl>
+<p-confirmDialog header="Confirmação" icon="pi pi-question-circle" #confirmacao>
+  <p-footer>
+    <p-button icon="pi pi-check" label="Sim"
+      (click)="confirmacao.accept()"></p-button>
+    <p-button icon="pi pi-times" label="Não"
+      (click)="confirmacao.reject()"></p-button>
+  </p-footer>
+</p-confirmDialog>

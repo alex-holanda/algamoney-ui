@@ -1,7 +1,7 @@
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { LazyLoadEvent, MessageService } from 'primeng/components/common/api';
+import { LazyLoadEvent, MessageService, ConfirmationService } from 'primeng/components/common/api';
 
 import { LanmentoFiltro } from './../lancamento.service';
 import { LancamentoService } from '../lancamento.service';
@@ -21,7 +21,8 @@ export class LancamentosPesquisaComponent implements OnInit {
   constructor(
     private lancamentoService: LancamentoService,
     private formBuilder: FormBuilder,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit() {
@@ -45,8 +46,21 @@ export class LancamentosPesquisaComponent implements OnInit {
       );
   }
 
-  excluir(lancamento: any) {
-    return this.lancamentoService.excluir(lancamento.codigo)
+  confirmarExclusao(lancamento: any) {
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja excluir?',
+      accept: () => { this.excluir(lancamento); }
+    });
+  }
+
+  aoMudarPagina(event: LazyLoadEvent) {
+    const pagina = event.first / event.rows;
+    this.pesquisar(pagina);
+    // console.log(event);
+  }
+
+  private excluir(lancamento: any) {
+    this.lancamentoService.excluir(lancamento.codigo)
       .subscribe(
         () => {
           this.pesquisar(0);
@@ -54,12 +68,6 @@ export class LancamentosPesquisaComponent implements OnInit {
         },
         error => alert('Erro ao carregar a lista de lançamentos ')
       );
-  }
-
-  aoMudarPagina(event: LazyLoadEvent) {
-    const pagina = event.first / event.rows;
-    this.pesquisar(pagina);
-    // console.log(event);
   }
 
   private configurarFormulario() {

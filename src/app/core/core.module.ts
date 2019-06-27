@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { MessageService, ConfirmationService } from 'primeng/components/common/api';
 import { GrowlModule } from 'primeng/growl';
-import { MessageService } from 'primeng/components/common/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { NavbarComponent } from './navbar/navbar.component';
 
@@ -13,15 +14,18 @@ import { NavbarComponent } from './navbar/navbar.component';
   imports: [
     CommonModule,
 
-    GrowlModule
+    GrowlModule,
+    ConfirmDialogModule
   ],
 exports: [
   NavbarComponent,
 
-  GrowlModule
+  GrowlModule,
+  ConfirmDialogModule
 ],
 providers: [
-  MessageService
+  MessageService,
+  ConfirmationService
 ]
 })
 export class CoreModule { }
