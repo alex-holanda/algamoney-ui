@@ -5,6 +5,7 @@ import { LazyLoadEvent, MessageService, ConfirmationService } from 'primeng/comp
 
 import { LanmentoFiltro } from './../lancamento.service';
 import { LancamentoService } from '../lancamento.service';
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -22,7 +23,8 @@ export class LancamentosPesquisaComponent implements OnInit {
     private lancamentoService: LancamentoService,
     private formBuilder: FormBuilder,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private errorHandler: ErrorHandlerService
   ) { }
 
   ngOnInit() {
@@ -42,7 +44,7 @@ export class LancamentosPesquisaComponent implements OnInit {
           this.totalRegistros = resultado.total;
           this.lancamentos = resultado.lancamentos;
         },
-        error => alert('Erro ao carregar a lista de lançamentos ')
+        error => this.errorHandler.handle(error)
       );
   }
 
@@ -66,7 +68,7 @@ export class LancamentosPesquisaComponent implements OnInit {
           this.pesquisar(0);
           this.messageService.add({severity: 'success', detail: 'Lançamento excluído com sucesso'});
         },
-        error => alert('Erro ao carregar a lista de lançamentos ')
+        error => this.errorHandler.handle(error)
       );
   }
 

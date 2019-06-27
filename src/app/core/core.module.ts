@@ -1,11 +1,16 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 
 import { MessageService, ConfirmationService } from 'primeng/components/common/api';
 import { GrowlModule } from 'primeng/growl';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
+import { ErrorHandlerService } from './error-handler.service';
 import { NavbarComponent } from './navbar/navbar.component';
+
+registerLocaleData(localePt);
 
 @NgModule({
   declarations: [
@@ -24,8 +29,12 @@ exports: [
   ConfirmDialogModule
 ],
 providers: [
+  ErrorHandlerService,
+
   MessageService,
-  ConfirmationService
+  ConfirmationService,
+
+  { provide: LOCALE_ID, useValue: 'pt' }
 ]
 })
 export class CoreModule { }

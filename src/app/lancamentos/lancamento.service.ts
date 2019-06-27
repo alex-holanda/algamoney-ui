@@ -36,8 +36,6 @@ export class LancamentoService {
       }
     });
 
-    moment.locale('pt-BR');
-
     if (filtro.descricao) {
       params = params.append('descricao', filtro.descricao);
     }
