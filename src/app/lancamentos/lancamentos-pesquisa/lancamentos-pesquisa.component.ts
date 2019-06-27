@@ -1,9 +1,9 @@
-import { LanmentoFiltro } from './../lancamento.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { LazyLoadEvent } from 'primeng/components/common/api';
+import { LazyLoadEvent, MessageService } from 'primeng/components/common/api';
 
+import { LanmentoFiltro } from './../lancamento.service';
 import { LancamentoService } from '../lancamento.service';
 
 @Component({
@@ -20,7 +20,8 @@ export class LancamentosPesquisaComponent implements OnInit {
 
   constructor(
     private lancamentoService: LancamentoService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -49,6 +50,7 @@ export class LancamentosPesquisaComponent implements OnInit {
       .subscribe(
         () => {
           this.pesquisar(0);
+          this.messageService.add({severity: 'success', detail: 'Lançamento excluído com sucesso'});
         },
         error => alert('Erro ao carregar a lista de lançamentos ')
       );
