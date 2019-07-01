@@ -1,3 +1,6 @@
+import { map } from 'rxjs/operators';
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { PessoaService } from './../../pessoas/pessoa.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
@@ -20,25 +23,34 @@ export class LancamentoCadastroComponent implements OnInit {
     { label: 'Transporte', value: 2 }
   ];
 
-  pessoas = [
-    { label: 'João da Silva', value: 1 },
-    { label: 'Sebastião Souza', value: 2 },
-    { label: 'Maria Abadia', value: 3 }
-  ];
+  pessoas = [];
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private pessoaService: PessoaService,
+    private errorHandler: ErrorHandlerService
   ) { }
 
   ngOnInit() {
     this.configurarFormulario();
+    this.carregarPessoas();
   }
 
   salvar() {
-    console.log('Salvando....')
+    console.log('Salvando....');
   }
 
   // MÉTODOS PRIVADOS
+
+  private carregarPessoas() {
+    this.pessoaService.pesquisarTodas()
+      .subscribe(
+        resp => {
+          this.pessoas = resp.pessoas.map(p => ({ label: p.nome, value: p.codigo }));
+        },
+        error => this.errorHandler.handle(error)
+      );
+  }
 
   private configurarFormulario() {
     this.formulario = this.formBuilder.group({
