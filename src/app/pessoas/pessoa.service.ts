@@ -51,6 +51,18 @@ export class PessoaService {
       );
   }
 
+  atualizarPropriedade(codigo: number, ativo: boolean): Observable<any> {
+    const headers = new HttpHeaders()
+      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
+      .append('Content-Type', 'application/json');
+
+    return this.http.put(`${this.pessoaUrl}/${codigo}/ativo`, ativo, { headers })
+      .pipe(
+        catchError(this.handleError),
+        map( () => null )
+      );
+  }
+
   excluir(codigo: number): Observable<any> {
     const headers = new HttpHeaders()
       .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');

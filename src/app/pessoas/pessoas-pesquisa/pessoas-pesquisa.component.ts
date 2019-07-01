@@ -45,6 +45,21 @@ export class PessoasPesquisaComponent implements OnInit {
       );
   }
 
+  atualizarPropriedade(codigo: number, ativo: boolean) {
+    console.log('código: ', codigo);
+    console.log('ativo' , ativo);
+
+    this.pessoaService.atualizarPropriedade(codigo, ativo)
+      .subscribe(
+        () => {
+          this.pesquisar(0);
+          this.messageService.add({ severity: 'success',
+            detail: 'Propriedade de pessoa atualizada com sucesso' });
+        },
+        error => this.errorHandler.handle(error)
+      );
+  }
+
   confirmarExclusao(pessoa: any) {
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja excluir?',
