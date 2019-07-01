@@ -1,8 +1,9 @@
-import { map } from 'rxjs/operators';
-import { ErrorHandlerService } from 'src/app/core/error-handler.service';
-import { PessoaService } from './../../pessoas/pessoa.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+
+import { CategoriaService } from './../../categorias/categoria.service';
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { PessoaService } from './../../pessoas/pessoa.service';
 
 @Component({
   selector: 'app-lancamento-cadastro',
@@ -18,22 +19,21 @@ export class LancamentoCadastroComponent implements OnInit {
 
   formulario: FormGroup;
 
-  categorias = [
-    { label: 'Alimentação', value: 1 },
-    { label: 'Transporte', value: 2 }
-  ];
+  categorias = [];
 
   pessoas = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private pessoaService: PessoaService,
-    private errorHandler: ErrorHandlerService
+    private errorHandler: ErrorHandlerService,
+    private categoriaService: CategoriaService
   ) { }
 
   ngOnInit() {
     this.configurarFormulario();
     this.carregarPessoas();
+    this.carregarCategorias();
   }
 
   salvar() {
@@ -47,6 +47,16 @@ export class LancamentoCadastroComponent implements OnInit {
       .subscribe(
         resp => {
           this.pessoas = resp.pessoas.map(p => ({ label: p.nome, value: p.codigo }));
+        },
+        error => this.errorHandler.handle(error)
+      );
+  }
+
+  private carregarCategorias() {
+    this.categoriaService.listar()
+      .subscribe(
+        resp => {
+          this.categorias = resp.map(c => ({label: c.nome, value: c.codigo }));
         },
         error => this.errorHandler.handle(error)
       );
