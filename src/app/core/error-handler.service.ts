@@ -12,15 +12,12 @@ export class ErrorHandlerService {
   ) { }
 
   handle(errorResponse: any) {
-    let message: string;
 
-    if (typeof errorResponse === 'string') {
-      message = errorResponse;
-    } else {
-      message = 'Erro ao processar serviço remoto. Tente novamente';
-      console.log('Ocorreu um erro ', errorResponse);
-    }
+    errorResponse.error.forEach(e => {
+      console.log(e.mensagemUsuario);
+      this.messageService.add({severity: 'error', detail: e.mensagemUsuario});
+    });
 
-    this.messageService.add({severity: 'error', detail: message});
+
   }
 }

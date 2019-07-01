@@ -1,3 +1,4 @@
+import { PessoasModule } from './pessoas/pessoas.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
@@ -22,6 +23,7 @@ import { LancamentosModule } from './lancamentos/lancamentos.module';
     HttpClientModule,
 
     LancamentosModule,
+    PessoasModule,
 
     CoreModule
   ],

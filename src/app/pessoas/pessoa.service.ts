@@ -51,6 +51,17 @@ export class PessoaService {
       );
   }
 
+  excluir(codigo: number): Observable<any> {
+    const headers = new HttpHeaders()
+      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+
+    return this.http.delete(`${this.pessoaUrl}/${codigo}`, { headers })
+      .pipe(
+        catchError(this.handleError),
+        map(() => null)
+      );
+  }
+
   pesquisarTodas() {
     const headers = new HttpHeaders()
       .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');

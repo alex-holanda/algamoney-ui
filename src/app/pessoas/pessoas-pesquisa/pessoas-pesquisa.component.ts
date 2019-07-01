@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
-import { LazyLoadEvent } from 'primeng/components/common/api';
+import { LazyLoadEvent, MessageService, ConfirmationService } from 'primeng/components/common/api';
 
 import { PessoaService, PessoaFilter } from './../pessoa.service';
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 @Component({
   selector: 'app-pessoas-pesquisa',
@@ -19,16 +20,14 @@ export class PessoasPesquisaComponent implements OnInit {
 
   constructor(
     private pessoaService: PessoaService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private errorHandler: ErrorHandlerService
   ) { }
 
   ngOnInit() {
     this.configurarFormulario();
-  }
-
-  aoMudarPagina(event: LazyLoadEvent) {
-    const pagina = event.first / event.rows;
-    this.pesquisar(pagina);
   }
 
   pesquisar(pagina = 0) {
@@ -43,6 +42,31 @@ export class PessoasPesquisaComponent implements OnInit {
           this.totalRegistros = resultado.total;
         },
         error => alert('Erro ao carregar a lista de lançamentos ')
+      );
+  }
+
+  confirmarExclusao(pessoa: any) {
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja excluir?',
+      accept: () => { this.excluir(pessoa); }
+    });
+  }
+
+  aoMudarPagina(event: LazyLoadEvent) {
+    const pagina = event.first / event.rows;
+    this.pesquisar(pagina);
+  }
+
+  private excluir(pessoa: any) {
+    console.log(pessoa);
+
+    this.pessoaService.excluir(pessoa.codigo)
+      .subscribe(
+        () => {
+          this.pesquisar(0);
+          this.messageService.add({ severity: 'success', detail: 'Pessoa deletada com sucesso.' });
+        },
+        error => this.errorHandler.handle(error)
       );
   }
 
