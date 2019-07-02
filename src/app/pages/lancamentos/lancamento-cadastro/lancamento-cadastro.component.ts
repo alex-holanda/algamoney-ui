@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
+import { MessageService } from 'primeng/components/common/api';
+
 import { CategoriaService } from '../../categorias/shared/categoria.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { PessoaService } from '../../pessoas/shared/pessoa.service';
@@ -29,7 +31,8 @@ export class LancamentoCadastroComponent implements OnInit {
     private pessoaService: PessoaService,
     private errorHandler: ErrorHandlerService,
     private categoriaService: CategoriaService,
-    private lancamentoService: LancamentoService
+    private lancamentoService: LancamentoService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -49,7 +52,10 @@ export class LancamentoCadastroComponent implements OnInit {
     this.lancamentoService.adicionar(lancamento)
       .subscribe(
         resp => {
-          return console.log(resp);
+          this.messageService.add({severity: 'success',
+            detail: `${resp.descricao} cadastrado com sucesso`});
+
+          this.formulario.reset();
         },
         error => this.errorHandler.handle(error)
       );

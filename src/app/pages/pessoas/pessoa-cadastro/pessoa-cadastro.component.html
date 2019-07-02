@@ -13,39 +13,41 @@
         <input pInputText type="text" id="nome" formControlName="nome" class="ng-dirty ng-invalid"/>
       </div>
 
-      <div class="ui-g-12 ui-md-9 ui-fluid">
-        <label>Logradouro</label>
-        <input pInputText type="text" id="logradouro" formControlName="logradouro"/>
-      </div>
+      <div formGroupName="endereco">
+        <div class="ui-g-12 ui-md-9 ui-fluid">
+          <label>Logradouro</label>
+          <input pInputText type="text" id="logradouro" formControlName="logradouro"/>
+        </div>
 
-      <div class="ui-g-12 ui-md-3 ui-fluid">
-        <label>Número</label>
-        <input pInputText type="text" id="numero" formControlName="numero"/>
-      </div>
+        <div class="ui-g-12 ui-md-3 ui-fluid">
+          <label>Número</label>
+          <input pInputText type="text" id="numero" formControlName="numero"/>
+        </div>
 
-      <div class="ui-g-12 ui-md-4 ui-fluid">
-        <label>Complemento</label>
-        <input pInputText type="text" id="complemento" formControlName="complemento"/>
-      </div>
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>Complemento</label>
+          <input pInputText type="text" id="complemento" formControlName="complemento"/>
+        </div>
 
-      <div class="ui-g-12 ui-md-4 ui-fluid">
-        <label>Bairro</label>
-        <input pInputText type="text" id="bairro" formControlName="bairro"/>
-      </div>
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>Bairro</label>
+          <input pInputText type="text" id="bairro" formControlName="bairro"/>
+        </div>
 
-      <div class="ui-g-12 ui-md-4 ui-fluid">
-        <label>CEP</label>
-        <p-inputMask mask="99.999-999" id="cep" formControlName="cep"></p-inputMask>
-      </div>
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>CEP</label>
+          <p-inputMask mask="99.999-999" id="cep" formControlName="cep"></p-inputMask>
+        </div>
 
-      <div class="ui-g-12 ui-md-6 ui-fluid">
-        <label>Cidade</label>
-        <input pInputText type="text" id="cidade" formControlName="cidade"/>
-      </div>
+        <div class="ui-g-12 ui-md-6 ui-fluid">
+          <label>Cidade</label>
+          <input pInputText type="text" id="cidade" formControlName="cidade"/>
+        </div>
 
-      <div class="ui-g-12 ui-md-6 ui-fluid">
-        <label>Estado</label>
-        <input pInputText type="text" id="estado" formControlName="estado"/>
+        <div class="ui-g-12 ui-md-6 ui-fluid">
+          <label>Estado</label>
+          <input pInputText type="text" id="estado" formControlName="estado"/>
+        </div>
       </div>
 
       <div class="ui-g-12">
@@ -56,3 +58,5 @@
     </div>
   </form>
 </div>
+
+<pre>{{ formulario.value | json }}</pre>

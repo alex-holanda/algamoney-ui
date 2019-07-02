@@ -1,3 +1,4 @@
+import { Pessoa } from './pessoa.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -16,6 +17,17 @@ export class PessoaService {
   constructor(
     private http: HttpClient
   ) { }
+
+  adicionar(pessoa: Pessoa): Observable<Pessoa> {
+    const headers = new HttpHeaders()
+      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+
+    return this.http.post(`${this.pessoaUrl}`, pessoa, { headers })
+      .pipe(
+        catchError(this.handleError),
+        map(Pessoa.fromJson)
+      );
+  }
 
   pesquisar(filtro: PessoaFiltro): Observable<any> {
     const headers = new HttpHeaders()
