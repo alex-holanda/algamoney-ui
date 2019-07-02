@@ -21,7 +21,7 @@ export class LancamentoService {
     private http: HttpClient
   ) { }
 
-  salvar(lancamento: Lancamento): Observable<Lancamento> {
+  adicionar(lancamento: Lancamento): Observable<Lancamento> {
     const headers = new HttpHeaders()
       .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
 

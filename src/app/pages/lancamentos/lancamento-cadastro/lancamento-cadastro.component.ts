@@ -46,7 +46,7 @@ export class LancamentoCadastroComponent implements OnInit {
   private criar() {
     const lancamento: Lancamento = Lancamento.fromJson(this.formulario.value);
 
-    this.lancamentoService.salvar(lancamento)
+    this.lancamentoService.adicionar(lancamento)
       .subscribe(
         resp => {
           return console.log(resp);
@@ -84,10 +84,12 @@ export class LancamentoCadastroComponent implements OnInit {
       descricao: [null, [ this.validarObrigatoriedade, this.validarTamanhoMinimo(5) ]],
       valor: [null, Validators.required],
       pessoa: this.formBuilder.group({
-        codigo: [null, Validators.required]
+        codigo: [null, Validators.required],
+        nome: []
       }),
       categoria: this.formBuilder.group({
-        codigo: [null, Validators.required]
+        codigo: [null, Validators.required],
+        nome: []
       }),
       observacao: []
     });
