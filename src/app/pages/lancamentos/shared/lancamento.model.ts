@@ -1,3 +1,6 @@
+import { Categoria } from 'src/app/pages/categorias/shared/categoria.model';
+import { Pessoa } from 'src/app/pages/pessoas/shared/pessoa.model';
+
 export class Lancamento {
   constructor(
     public codigo?: number,
@@ -6,9 +9,9 @@ export class Lancamento {
     public dataVencimento?: Date,
     public dataPagamento?: Date,
     public valor?: number,
-    public observacao?: string,
-    public pessoaId?: number,
-    public categoriaId?: number
+    public pessoa?: Pessoa,
+    public categoria?: Categoria,
+    public observacao?: string
   ) { }
 
   static tipos = [

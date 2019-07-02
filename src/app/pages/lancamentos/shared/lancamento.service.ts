@@ -1,5 +1,3 @@
-import { Lancamento } from './lancamento.model';
-import { LancamentoFiltro } from './lancamento-filtro.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
@@ -8,6 +6,9 @@ import { map, catchError } from 'rxjs/operators';
 
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
+
+import { Lancamento } from './lancamento.model';
+import { LancamentoFiltro } from './lancamento-filtro.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,17 @@ export class LancamentoService {
   constructor(
     private http: HttpClient
   ) { }
+
+  salvar(lancamento: Lancamento): Observable<Lancamento> {
+    const headers = new HttpHeaders()
+      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+
+    return this.http.post(`${this.lancamentosUrl}`, lancamento, { headers })
+      .pipe(
+        catchError(this.handleError),
+        map(Lancamento.fromJson)
+      );
+  }
 
   pesquisar(filtro: LancamentoFiltro): Observable<any> {
     const headers = new HttpHeaders()

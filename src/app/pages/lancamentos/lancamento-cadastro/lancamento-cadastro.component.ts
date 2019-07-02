@@ -7,6 +7,7 @@ import { PessoaService } from '../../pessoas/shared/pessoa.service';
 import { Lancamento } from '../shared/lancamento.model';
 import { Pessoa } from 'src/app/pages/pessoas/shared/pessoa.model';
 import { Categoria } from './../../categorias/shared/categoria.model';
+import { LancamentoService } from 'src/app/pages/lancamentos/shared/lancamento.service';
 
 @Component({
   selector: 'app-lancamento-cadastro',
@@ -27,7 +28,8 @@ export class LancamentoCadastroComponent implements OnInit {
     private formBuilder: FormBuilder,
     private pessoaService: PessoaService,
     private errorHandler: ErrorHandlerService,
-    private categoriaService: CategoriaService
+    private categoriaService: CategoriaService,
+    private lancamentoService: LancamentoService
   ) { }
 
   ngOnInit() {
@@ -44,7 +46,13 @@ export class LancamentoCadastroComponent implements OnInit {
   private criar() {
     const lancamento: Lancamento = Lancamento.fromJson(this.formulario.value);
 
-    console.log(lancamento);
+    this.lancamentoService.salvar(lancamento)
+      .subscribe(
+        resp => {
+          return console.log(resp);
+        },
+        error => this.errorHandler.handle(error)
+      );
   }
 
   private carregarPessoas() {
@@ -75,8 +83,12 @@ export class LancamentoCadastroComponent implements OnInit {
       dataPagamento: [],
       descricao: [null, [ this.validarObrigatoriedade, this.validarTamanhoMinimo(5) ]],
       valor: [null, Validators.required],
-      pessoaId: [null, Validators.required],
-      categoriaId: [null, Validators.required],
+      pessoa: this.formBuilder.group({
+        codigo: [null, Validators.required]
+      }),
+      categoria: this.formBuilder.group({
+        codigo: [null, Validators.required]
+      }),
       observacao: []
     });
   }
