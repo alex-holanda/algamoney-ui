@@ -9,6 +9,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { ErrorHandlerService } from './error-handler.service';
 import { NavbarComponent } from './navbar/navbar.component';
+import { RouterModule } from '@angular/router';
 
 registerLocaleData(localePt);
 
@@ -20,7 +21,8 @@ registerLocaleData(localePt);
     CommonModule,
 
     GrowlModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    RouterModule
   ],
 exports: [
   NavbarComponent,

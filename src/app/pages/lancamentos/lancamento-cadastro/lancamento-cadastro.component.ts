@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
@@ -32,20 +33,58 @@ export class LancamentoCadastroComponent implements OnInit {
     private errorHandler: ErrorHandlerService,
     private categoriaService: CategoriaService,
     private lancamentoService: LancamentoService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    const codigoLancamento = this.route.snapshot.params.codigo;
+
+    if (codigoLancamento) {
+      this.carregarLancamento(codigoLancamento);
+    }
+
     this.configurarFormulario();
     this.carregarPessoas();
     this.carregarCategorias();
+  }
+
+  get editando() {
+    return Boolean(this.formulario.get('codigo').value);
   }
 
   salvar() {
     this.criar();
   }
 
+  carregarLancamento(codigo: number) {
+    this.buscarPorCodigo(codigo);
+  }
+
   // MÉTODOS PRIVADOS
+  private atualizar() {
+    const lancamento: Lancamento = Lancamento.fromJson(this.formulario.value);
+
+    this.lancamentoService.atualizar(lancamento)
+      .subscribe(
+        resp => {
+          console.log('Atualizar do componente: ', resp);
+          console.log('Formulário do componente: ', this.formulario.value);
+        },
+        error => this.errorHandler.handle(error)
+      );
+  }
+
+  private buscarPorCodigo(codigo: number) {
+    this.lancamentoService.buscarPorCodigo(codigo)
+      .subscribe(
+        resp => {
+          this.formulario.patchValue(resp);
+        },
+        error => this.errorHandler.handle(error)
+      );
+  }
+
   private criar() {
     const lancamento: Lancamento = Lancamento.fromJson(this.formulario.value);
 

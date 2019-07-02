@@ -21,6 +21,34 @@ export class LancamentoService {
     private http: HttpClient
   ) { }
 
+  atualizar(lancamento: Lancamento) {
+    const headers = new HttpHeaders()
+      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+
+    return this.http.put(`${this.lancamentosUrl}/${lancamento.codigo}`, lancamento, { headers })
+      .pipe(
+        catchError(this.handleError),
+        map(() => lancamento)
+      );
+  }
+
+  buscarPorCodigo(codigo: number): Observable<Lancamento> {
+    const headers = new HttpHeaders()
+      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+
+    return this.http.get(`${this.lancamentosUrl}/${codigo}`, { headers } )
+      .pipe(
+        catchError(this.handleError),
+        map(resp => {
+          const lancamento = Lancamento.fromJson(resp);
+
+          this.converterStringsParaDatas([lancamento]);
+
+          return lancamento;
+        })
+      );
+  }
+
   adicionar(lancamento: Lancamento): Observable<Lancamento> {
     const headers = new HttpHeaders()
       .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
@@ -95,5 +123,15 @@ export class LancamentoService {
     );
 
     return lancamentos;
+  }
+
+  private converterStringsParaDatas(lancamentos: Lancamento[]) {
+    for (const lancamento of lancamentos) {
+      lancamento.dataVencimento = moment(lancamento.dataVencimento, 'YYYY-MM-DD').toDate();
+
+      if (lancamento.dataPagamento) {
+        lancamento.dataPagamento = moment(lancamento.dataPagamento, 'YYYY-MM-DD').toDate();
+      }
+    }
   }
 }

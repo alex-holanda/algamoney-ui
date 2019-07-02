@@ -62,7 +62,8 @@
                   {{ lancamento.valor | number:'1.2-2' }}
                 </td>
                 <td class="col-acoes">
-                    <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top" style="margin-right: 5px"></a>
+                    <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top" style="margin-right: 5px"
+                      [routerLink]="['/lancamentos', lancamento.codigo]"></a>
                     <a pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"
                       (click)="confirmarExclusao(lancamento)"></a>
                 </td>
@@ -82,7 +83,7 @@
 
   <div class="ui-g">
     <div class="ui-g-12">
-      <a pButton label="Novo Lancamento"></a>
+      <a pButton label="Novo Lancamento" routerLink="/lancamentos/novo"></a>
     </div>
   </div>
 </div>
