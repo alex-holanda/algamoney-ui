@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
-import { CategoriaService } from './../../categorias/categoria.service';
+import { CategoriaService } from '../../categorias/shared/categoria.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
-import { PessoaService } from './../../pessoas/pessoa.service';
+import { PessoaService } from '../../pessoas/shared/pessoa.service';
+import { Lancamento } from './../shared/lancamento.model';
 
 @Component({
   selector: 'app-lancamento-cadastro',
@@ -12,10 +13,7 @@ import { PessoaService } from './../../pessoas/pessoa.service';
 })
 export class LancamentoCadastroComponent implements OnInit {
 
-  tipos = [
-    { label: 'Receita', value: 'RECEITA' },
-    { label: 'Despesa', value: 'DESPESA' }
-  ];
+  tipos = Lancamento.tipos;
 
   formulario: FormGroup;
 
@@ -37,10 +35,15 @@ export class LancamentoCadastroComponent implements OnInit {
   }
 
   salvar() {
-    console.log('Salvando....');
+    this.criar();
   }
 
   // MÉTODOS PRIVADOS
+  private criar() {
+    const lancamento: Lancamento = Lancamento.fromJson(this.formulario.value);
+
+    console.log(lancamento);
+  }
 
   private carregarPessoas() {
     this.pessoaService.pesquisarTodas()
@@ -70,14 +73,8 @@ export class LancamentoCadastroComponent implements OnInit {
       dataPagamento: [],
       descricao: [null, [ this.validarObrigatoriedade, this.validarTamanhoMinimo(5) ]],
       valor: [null, Validators.required],
-      pessoa: this.formBuilder.group({
-        codigo: [null, Validators.required],
-        nome: []
-      }),
-      categoria: this.formBuilder.group({
-        codigo: [null, Validators.required],
-        nome: []
-      }),
+      pessoaId: [null, Validators.required],
+      categoriaId: [null, Validators.required],
       observacao: []
     });
   }

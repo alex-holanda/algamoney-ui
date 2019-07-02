@@ -1,4 +1,3 @@
-import { PessoaService } from './../pessoas/pessoa.service';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 

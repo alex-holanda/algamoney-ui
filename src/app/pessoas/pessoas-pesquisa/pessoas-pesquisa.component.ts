@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { LazyLoadEvent, MessageService, ConfirmationService } from 'primeng/components/common/api';
 
-import { PessoaService, PessoaFilter } from './../pessoa.service';
+import { PessoaService, PessoaFilter } from '../shared/pessoa.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 @Component({
