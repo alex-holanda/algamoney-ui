@@ -1,9 +1,9 @@
+import { LancamentoFiltro } from './../shared/lancamento-filtro.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { LazyLoadEvent, MessageService, ConfirmationService } from 'primeng/components/common/api';
 
-import { LanmentoFiltro } from '../shared/lancamento.service';
 import { LancamentoService } from '../shared/lancamento.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
@@ -15,7 +15,7 @@ import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 export class LancamentosPesquisaComponent implements OnInit {
 
   totalRegistros = 0;
-  filtro = new LanmentoFiltro();
+  filtro = new LancamentoFiltro();
   formulario: FormGroup;
   lancamentos = [];
 

@@ -1,3 +1,5 @@
+import { Lancamento } from './lancamento.model';
+import { LancamentoFiltro } from './lancamento-filtro.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
@@ -6,14 +8,6 @@ import { map, catchError } from 'rxjs/operators';
 
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
-
-export class LanmentoFiltro {
-  descricao: string;
-  dataVencimentoInicio: Date;
-  dataVencimentoFim: Date;
-  pagina = 0;
-  itensPorPagina = 5;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +20,7 @@ export class LancamentoService {
     private http: HttpClient
   ) { }
 
-  pesquisar(filtro: LanmentoFiltro): Observable<any> {
+  pesquisar(filtro: LancamentoFiltro): Observable<any> {
     const headers = new HttpHeaders()
       .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
     let params = new HttpParams({
@@ -54,7 +48,7 @@ export class LancamentoService {
       .pipe(
         catchError(this.handleError),
         map(response => {
-          const lancamentos = response.content;
+          const lancamentos = this.jsonDataToResources(response.content);
 
           const resultado = {
             lancamentos,
@@ -79,5 +73,15 @@ export class LancamentoService {
 
   private handleError(error: any): Observable<any> {
     return throwError(error);
+  }
+
+  private jsonDataToResources(jsonData: any[]): Lancamento[] {
+    const lancamentos: Lancamento[] = [];
+
+    jsonData.forEach(
+      e => lancamentos.push(Lancamento.fromJson(e))
+    );
+
+    return lancamentos;
   }
 }
