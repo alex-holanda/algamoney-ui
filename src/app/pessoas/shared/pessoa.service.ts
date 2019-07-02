@@ -1,13 +1,10 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
-export class PessoaFilter {
-  nome: string;
-  pagina = 0;
-  itensPorPagina = 5;
-}
+import { PessoaFiltro } from './pessoa-filtro.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +17,7 @@ export class PessoaService {
     private http: HttpClient
   ) { }
 
-  pesquisar(filtro: PessoaFilter): Observable<any> {
+  pesquisar(filtro: PessoaFiltro): Observable<any> {
     const headers = new HttpHeaders()
       .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
 

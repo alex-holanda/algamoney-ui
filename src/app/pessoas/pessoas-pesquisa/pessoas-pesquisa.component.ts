@@ -3,8 +3,9 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { LazyLoadEvent, MessageService, ConfirmationService } from 'primeng/components/common/api';
 
-import { PessoaService, PessoaFilter } from '../shared/pessoa.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { PessoaFiltro } from '../shared/pessoa-filtro.model';
+import { PessoaService } from '../shared/pessoa.service';
 
 @Component({
   selector: 'app-pessoas-pesquisa',
@@ -14,7 +15,7 @@ import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 export class PessoasPesquisaComponent implements OnInit {
 
   totalRegistros = 0;
-  filtro = new PessoaFilter();
+  filtro = new PessoaFiltro();
   formulario: FormGroup;
   pessoas = [];
 
