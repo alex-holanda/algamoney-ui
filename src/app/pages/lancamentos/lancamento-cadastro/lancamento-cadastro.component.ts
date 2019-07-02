@@ -4,8 +4,8 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { CategoriaService } from '../../categorias/shared/categoria.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { PessoaService } from '../../pessoas/shared/pessoa.service';
-import { Lancamento } from './../shared/lancamento.model';
-import { Pessoa } from 'src/app/pessoas/shared/pessoa.model';
+import { Lancamento } from '../shared/lancamento.model';
+import { Pessoa } from 'src/app/pages/pessoas/shared/pessoa.model';
 import { Categoria } from './../../categorias/shared/categoria.model';
 
 @Component({

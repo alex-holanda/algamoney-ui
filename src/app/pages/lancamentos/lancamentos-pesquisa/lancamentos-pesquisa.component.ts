@@ -1,4 +1,4 @@
-import { LancamentoFiltro } from './../shared/lancamento-filtro.model';
+import { LancamentoFiltro } from '../shared/lancamento-filtro.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
 

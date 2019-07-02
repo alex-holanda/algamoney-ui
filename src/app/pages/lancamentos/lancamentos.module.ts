@@ -1,7 +1,6 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -14,35 +13,39 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputMaskModule } from 'primeng/inputmask';
 import { MessageModule } from 'primeng/message';
 
-import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
-import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
-import { SharedModule } from './../shared/shared.module';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
+
+import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
+import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
-    PessoaCadastroComponent,
-    PessoasPesquisaComponent
+    LancamentoCadastroComponent,
+    LancamentosPesquisaComponent
+  ],
+  exports: [
+    LancamentoCadastroComponent,
+    LancamentosPesquisaComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+
     InputTextModule,
     ButtonModule,
     TableModule,
     TooltipModule,
     InputTextareaModule,
-    BrowserAnimationsModule,
     CalendarModule,
     SelectButtonModule,
     DropdownModule,
     InputMaskModule,
     MessageModule,
-    FormsModule,
-    ReactiveFormsModule,
+    CurrencyMaskModule,
+
     SharedModule
-  ],
-  exports: [
-    PessoaCadastroComponent,
-    PessoasPesquisaComponent
   ]
 })
-export class PessoasModule { }
+export class LancamentosModule { }
