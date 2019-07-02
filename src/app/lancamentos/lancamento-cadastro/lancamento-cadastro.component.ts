@@ -5,6 +5,8 @@ import { CategoriaService } from '../../categorias/shared/categoria.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { PessoaService } from '../../pessoas/shared/pessoa.service';
 import { Lancamento } from './../shared/lancamento.model';
+import { Pessoa } from 'src/app/pessoas/shared/pessoa.model';
+import { Categoria } from './../../categorias/shared/categoria.model';
 
 @Component({
   selector: 'app-lancamento-cadastro',
@@ -17,9 +19,9 @@ export class LancamentoCadastroComponent implements OnInit {
 
   formulario: FormGroup;
 
-  categorias = [];
+  categorias: Array<Categoria> = null;
 
-  pessoas = [];
+  pessoas: Array<Pessoa> = null;
 
   constructor(
     private formBuilder: FormBuilder,

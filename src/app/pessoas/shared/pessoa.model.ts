@@ -10,4 +10,8 @@ export class Pessoa {
     public cidade?: string,
     public estado?: string
   ) { }
+
+  static fromJson(jsonData: any): Pessoa {
+    return Object.assign(new Pessoa(), jsonData);
+  }
 }
