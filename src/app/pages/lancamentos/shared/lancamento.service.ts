@@ -28,7 +28,13 @@ export class LancamentoService {
     return this.http.put(`${this.lancamentosUrl}/${lancamento.codigo}`, lancamento, { headers })
       .pipe(
         catchError(this.handleError),
-        map(() => lancamento)
+        map(resp => {
+          const lanc = Lancamento.fromJson(resp);
+
+          this.converterStringsParaDatas([lanc]);
+
+          return lanc;
+        })
       );
   }
 
@@ -119,7 +125,11 @@ export class LancamentoService {
     const lancamentos: Lancamento[] = [];
 
     jsonData.forEach(
-      e => lancamentos.push(Lancamento.fromJson(e))
+      e => {
+        const lancamento = Lancamento.fromJson(e);
+        this.converterStringsParaDatas([lancamento]);
+        lancamentos.push(Lancamento.fromJson(lancamento));
+      }
     );
 
     return lancamentos;

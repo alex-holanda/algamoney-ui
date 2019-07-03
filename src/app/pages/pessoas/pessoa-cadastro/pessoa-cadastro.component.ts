@@ -1,5 +1,7 @@
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { MessageService } from 'primeng/components/common/api';
 
@@ -20,18 +22,77 @@ export class PessoaCadastroComponent implements OnInit {
     private formBuilder: FormBuilder,
     private pessoaService: PessoaService,
     private errorHandler: ErrorHandlerService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle('Nova Pessoa');
+
+    const codigoPessoa = this.route.snapshot.params.codigo;
+
+    if (codigoPessoa) {
+      this.carregarPessoa(codigoPessoa);
+    }
+
     this.configurarFormulario();
   }
 
+  get editando() {
+    return Boolean(this.formulario.get('codigo').value);
+  }
+
   salvar() {
-    this.adiconar();
+    if (this.editando) {
+      this.atualizar();
+    } else {
+      this.adiconar();
+    }
+  }
+
+  carregarPessoa(codigo: number) {
+    this.buscarPorCodigo(codigo);
+  }
+
+  novo() {
+    this.configurarFormulario();
+
+    this.router.navigate(['/pessoas/novo']);
   }
 
   // MÉTODOS PRIVADOS
+  private atualizar() {
+    const pessoa = Pessoa.fromJson(this.formulario.value);
+
+    this.pessoaService.atualizar(pessoa)
+      .subscribe(
+        resp => {
+          this.messageService.add({severity: 'success',
+            detail: `${resp.nome} atualizada com sucesso`});
+
+          this.atualizarTitulo(resp.nome);
+        },
+        error => this.errorHandler.handle(error)
+      );
+  }
+
+  private buscarPorCodigo(codigo: number) {
+    this.pessoaService.buscarPorCodigo(codigo)
+      .subscribe(
+        resp => {
+          this.formulario.patchValue(resp);
+          this.atualizarTitulo(resp.nome);
+        },
+        error => this.errorHandler.handle(error)
+      );
+  }
+
+  private atualizarTitulo(nome: string) {
+    this.title.setTitle(`Editando pessoa: ${nome}`);
+  }
+
   private adiconar() {
     const pessoa: Pessoa = Pessoa.fromJson(this.formulario.value);
 

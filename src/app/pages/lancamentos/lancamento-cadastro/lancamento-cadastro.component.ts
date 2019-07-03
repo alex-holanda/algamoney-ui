@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
@@ -11,6 +11,7 @@ import { Lancamento } from '../shared/lancamento.model';
 import { Pessoa } from 'src/app/pages/pessoas/shared/pessoa.model';
 import { Categoria } from './../../categorias/shared/categoria.model';
 import { LancamentoService } from 'src/app/pages/lancamentos/shared/lancamento.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-lancamento-cadastro',
@@ -34,11 +35,15 @@ export class LancamentoCadastroComponent implements OnInit {
     private categoriaService: CategoriaService,
     private lancamentoService: LancamentoService,
     private messageService: MessageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
+    private title: Title
   ) { }
 
   ngOnInit() {
     const codigoLancamento = this.route.snapshot.params.codigo;
+
+    this.title.setTitle('Novo lançamento');
 
     if (codigoLancamento) {
       this.carregarLancamento(codigoLancamento);
@@ -54,22 +59,36 @@ export class LancamentoCadastroComponent implements OnInit {
   }
 
   salvar() {
-    this.criar();
+    if (this.editando) {
+      this.atualizar();
+    } else {
+      this.adicionar();
+    }
   }
 
   carregarLancamento(codigo: number) {
     this.buscarPorCodigo(codigo);
   }
 
+  novo() {
+    this.configurarFormulario();
+
+    this.router.navigate(['/lancamentos/novo']);
+  }
+
   // MÉTODOS PRIVADOS
   private atualizar() {
     const lancamento: Lancamento = Lancamento.fromJson(this.formulario.value);
 
+    console.log('Atualizando: ', lancamento);
+
     this.lancamentoService.atualizar(lancamento)
       .subscribe(
         resp => {
-          console.log('Atualizar do componente: ', resp);
-          console.log('Formulário do componente: ', this.formulario.value);
+          this.messageService.add({severity: 'success',
+            detail: `${resp.descricao} atualizado com sucesso`});
+
+          this.atualizarTitulo(resp.descricao);
         },
         error => this.errorHandler.handle(error)
       );
@@ -80,12 +99,13 @@ export class LancamentoCadastroComponent implements OnInit {
       .subscribe(
         resp => {
           this.formulario.patchValue(resp);
+          this.atualizarTitulo(resp.descricao);
         },
         error => this.errorHandler.handle(error)
       );
   }
 
-  private criar() {
+  private adicionar() {
     const lancamento: Lancamento = Lancamento.fromJson(this.formulario.value);
 
     this.lancamentoService.adicionar(lancamento)
@@ -94,7 +114,9 @@ export class LancamentoCadastroComponent implements OnInit {
           this.messageService.add({severity: 'success',
             detail: `${resp.descricao} cadastrado com sucesso`});
 
-          this.formulario.reset();
+          // this.formulario.reset();
+
+          this.router.navigate(['/lancamentos', resp.codigo]);
         },
         error => this.errorHandler.handle(error)
       );
@@ -148,5 +170,9 @@ export class LancamentoCadastroComponent implements OnInit {
     return (input: FormControl) => {
       return (!input.value || input.value.length >= valor) ? null : { tamanhoMinimo: { tamanho: valor } };
     };
+  }
+
+  private atualizarTitulo(descricao: string) {
+    this.title.setTitle(`Editando lançamento: ${descricao}`);
   }
 }

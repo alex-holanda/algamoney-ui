@@ -6,6 +6,7 @@ import { LazyLoadEvent, MessageService, ConfirmationService } from 'primeng/comp
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { PessoaFiltro } from '../shared/pessoa-filtro.model';
 import { PessoaService } from '../shared/pessoa.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-pessoas-pesquisa',
@@ -24,10 +25,12 @@ export class PessoasPesquisaComponent implements OnInit {
     private formBuilder: FormBuilder,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private errorHandler: ErrorHandlerService
+    private errorHandler: ErrorHandlerService,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle('Lista de pessoas');
     this.configurarFormulario();
   }
 
@@ -47,8 +50,6 @@ export class PessoasPesquisaComponent implements OnInit {
   }
 
   atualizarPropriedade(codigo: number, ativo: boolean) {
-    console.log('código: ', codigo);
-    console.log('ativo' , ativo);
 
     this.pessoaService.atualizarPropriedade(codigo, ativo)
       .subscribe(
@@ -74,7 +75,6 @@ export class PessoasPesquisaComponent implements OnInit {
   }
 
   private excluir(pessoa: any) {
-    console.log(pessoa);
 
     this.pessoaService.excluir(pessoa.codigo)
       .subscribe(

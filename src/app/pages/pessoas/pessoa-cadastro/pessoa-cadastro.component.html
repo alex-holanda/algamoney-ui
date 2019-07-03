@@ -52,8 +52,11 @@
 
       <div class="ui-g-12">
           <p-button [disabled]="formulario.invalid" type="submit" label="Salvar" class="ui-button-primary"></p-button>
-          <p-button type="button" label="Novo" class="ui-button-info"></p-button>
-          <a href="javascript:;">Voltar para a pesquisa</a>
+
+          <p-button type="button" label="Novo" class="ui-button-info"
+            (click)="novo()"></p-button>
+
+          <a routerLink="/pessoas">Voltar para a pesquisa</a>
       </div>
     </div>
   </form>

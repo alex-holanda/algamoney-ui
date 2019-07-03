@@ -6,6 +6,7 @@ import { LazyLoadEvent, MessageService, ConfirmationService } from 'primeng/comp
 
 import { LancamentoService } from '../shared/lancamento.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -24,10 +25,12 @@ export class LancamentosPesquisaComponent implements OnInit {
     private formBuilder: FormBuilder,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private errorHandler: ErrorHandlerService
+    private errorHandler: ErrorHandlerService,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle('Pesquisa de lançamentos');
     this.configurarFormulario();
   }
 

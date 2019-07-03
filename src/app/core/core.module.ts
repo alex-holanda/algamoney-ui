@@ -10,12 +10,15 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ErrorHandlerService } from './error-handler.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RouterModule } from '@angular/router';
+import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
+import { Title } from '@angular/platform-browser';
 
 registerLocaleData(localePt);
 
 @NgModule({
   declarations: [
-    NavbarComponent
+    NavbarComponent,
+    PaginaNaoEncontradaComponent
   ],
   imports: [
     CommonModule,
@@ -35,6 +38,8 @@ providers: [
 
   MessageService,
   ConfirmationService,
+
+  Title,
 
   { provide: LOCALE_ID, useValue: 'pt' }
 ]

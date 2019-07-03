@@ -29,6 +29,34 @@ export class PessoaService {
       );
   }
 
+  atualizar(pessoa: Pessoa): Observable<Pessoa> {
+    const headers = new HttpHeaders()
+      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+
+    return this.http.put(`${this.pessoaUrl}/${pessoa.codigo}`, pessoa, { headers })
+      .pipe(
+        catchError(this.handleError),
+        map(resp => {
+          return Pessoa.fromJson(resp);
+        })
+      );
+  }
+
+  buscarPorCodigo(codigo: number): Observable<Pessoa> {
+    const headers = new HttpHeaders()
+      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+
+    return this.http.get(`${this.pessoaUrl}/${codigo}`, { headers })
+      .pipe(
+        catchError(this.handleError),
+        map(resp => {
+          const p = Pessoa.fromJson(resp);
+
+          return p;
+        })
+      );
+  }
+
   pesquisar(filtro: PessoaFiltro): Observable<any> {
     const headers = new HttpHeaders()
       .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
