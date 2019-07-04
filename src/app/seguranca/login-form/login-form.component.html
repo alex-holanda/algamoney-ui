@@ -1,0 +1,26 @@
+<div class="container" style="max-width: 400px;">
+
+  <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="login()">
+
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12">
+        <h1>Login</h1>
+      </div>
+
+      <div class="ui-g-12">
+        <input type="email" pInputText placeholder="E-mail" formControlName="usuario">
+      </div>
+
+      <div class="ui-g-12">
+          <input type="password" pInputText placeholder="Senha" formControlName="senha">
+      </div>
+
+      <div class="ui-g-12">
+          <p-button  type="submit" [disabled]="formulario.invalid" label="Login"
+            class="ui-button-primary" style="width: 100%"></p-button>
+      </div>
+    </div>
+
+  </form>
+
+</div>

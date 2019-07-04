@@ -14,15 +14,29 @@ export class ErrorHandlerService {
 
   handle(errorResponse: any) {
 
-   let message: string;
+    let msg: string;
 
-   if (typeof errorResponse === 'string') {
-     message = errorResponse;
-   } else if (errorResponse instanceof HttpErrorResponse
-      && errorResponse.status >= 400 && errorResponse.status <= 499) {
-      message = 'Ocorreu um erro ao processar sua solicitação';
-   }
+    if (typeof errorResponse === 'string') {
+      msg = errorResponse;
 
-   this.messageService.add( { severity: 'error', detail: message } );
+    } else if (errorResponse instanceof Response
+        && errorResponse.status >= 400 && errorResponse.status <= 499) {
+      let errors;
+      msg = 'Ocorreu um erro ao processar a sua solicitação';
+
+      try {
+        errors = errorResponse.json();
+
+        msg = errors[0].mensagemUsuario;
+      } catch (e) { }
+
+      console.error('Ocorreu um erro', errorResponse);
+
+    } else {
+      msg = 'Erro ao processar serviço remoto. Tente novamente.';
+      console.error('Ocorreu um erro', errorResponse);
+    }
+
+    this.messageService.add( { severity: 'error', detail: msg } );
   }
 }

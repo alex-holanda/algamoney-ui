@@ -1,3 +1,4 @@
+import { SegurancaModule } from './seguranca/seguranca.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -24,6 +25,7 @@ import { PessoasModule } from './pages/pessoas/pessoas.module';
     PessoasModule,
 
     CoreModule,
+    SegurancaModule,
     AppRoutingModule
   ],
   providers: [],
