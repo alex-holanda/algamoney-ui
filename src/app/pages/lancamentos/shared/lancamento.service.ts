@@ -5,7 +5,6 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import * as moment from 'moment';
-import 'moment/locale/pt-br';
 
 import { Lancamento } from './lancamento.model';
 import { LancamentoFiltro } from './lancamento-filtro.model';

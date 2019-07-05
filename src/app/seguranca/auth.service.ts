@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
 
@@ -31,8 +31,6 @@ export class AuthService {
 
     const body = `username=${usuario}&password=${senha}&grant_type=password`;
 
-    console.log('login');
-
     return this.http.post(`${this.oauthTokenUrl}`, body,
       {headers, withCredentials: true})
       .pipe(
@@ -41,6 +39,29 @@ export class AuthService {
           this.armazenarToken(resp.access_token);
         })
       );
+  }
+
+  obterNovoAccessToken(): Observable<string> {
+    const headers = new HttpHeaders()
+      .append('Content-Type', 'application/x-www-form-urlencoded')
+      .append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
+
+    const body = `grant_type=refresh_token`;
+
+    return this.http.post(`${this.oauthTokenUrl}`, body,
+      { headers, withCredentials: true })
+      .pipe(
+        catchError(this.handleError),
+        map(resp => {
+          this.armazenarToken(resp.access_token);
+          return resp.access_token;
+        })
+      );
+  }
+
+  isAccessTokenInvalido() {
+    const token = localStorage.getItem('token');
+    return !token || this.jwtHelper.isTokenExpired(token);
   }
 
   temPermissao(permissao: string) {
@@ -63,7 +84,7 @@ export class AuthService {
     localStorage.setItem('token', token);
   }
 
-  private carregarToken() {
+  carregarToken() {
     const token = localStorage.getItem('token');
 
     if (token) {

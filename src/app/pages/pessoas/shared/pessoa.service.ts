@@ -13,8 +13,6 @@ import { environment } from 'src/environments/environment';
 })
 export class PessoaService {
 
-  headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.getItem('token')});
-
   pessoaUrl = `${environment.apiUrl}/pessoas`;
 
   constructor(
@@ -23,7 +21,7 @@ export class PessoaService {
 
   adicionar(pessoa: Pessoa): Observable<Pessoa> {
 
-    return this.http.post(`${this.pessoaUrl}`, pessoa, {headers: this.headers})
+    return this.http.post(`${this.pessoaUrl}`, pessoa)
       .pipe(
         catchError(this.handleError),
         map(Pessoa.fromJson)
@@ -32,7 +30,7 @@ export class PessoaService {
 
   atualizar(pessoa: Pessoa): Observable<Pessoa> {
 
-    return this.http.put(`${this.pessoaUrl}/${pessoa.codigo}`, pessoa, {headers: this.headers})
+    return this.http.put(`${this.pessoaUrl}/${pessoa.codigo}`, pessoa)
       .pipe(
         catchError(this.handleError),
         map(resp => {
@@ -43,7 +41,7 @@ export class PessoaService {
 
   buscarPorCodigo(codigo: number): Observable<Pessoa> {
 
-    return this.http.get(`${this.pessoaUrl}/${codigo}`, {headers: this.headers})
+    return this.http.get(`${this.pessoaUrl}/${codigo}`)
       .pipe(
         catchError(this.handleError),
         map(resp => {
@@ -67,7 +65,7 @@ export class PessoaService {
       params = params.append('nome', filtro.nome);
     }
 
-    return this.http.get(this.pessoaUrl, {headers: this.headers, params})
+    return this.http.get(this.pessoaUrl, { params})
       .pipe(
         catchError(this.handleError),
         map(resp => {
@@ -86,10 +84,8 @@ export class PessoaService {
   atualizarPropriedade(codigo: number, ativo: boolean): Observable<any> {
     // const headers = new HttpHeaders()
     //  .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
-    const headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.getItem('token')})
-      .append('Content-Type', 'application/json');
 
-    return this.http.put(`${this.pessoaUrl}/${codigo}/ativo`, ativo, {headers})
+    return this.http.put(`${this.pessoaUrl}/${codigo}/ativo`, ativo)
       .pipe(
         catchError(this.handleError),
         map( () => null )
@@ -98,7 +94,7 @@ export class PessoaService {
 
   excluir(codigo: number): Observable<any> {
 
-    return this.http.delete(`${this.pessoaUrl}/${codigo}`, {headers: this.headers})
+    return this.http.delete(`${this.pessoaUrl}/${codigo}`)
       .pipe(
         catchError(this.handleError),
         map(() => null)
@@ -107,7 +103,7 @@ export class PessoaService {
 
   pesquisarTodas() {
 
-    return this.http.get(this.pessoaUrl, {headers: this.headers})
+    return this.http.get(this.pessoaUrl)
       .pipe(
         catchError(this.handleError),
         map(resp => {

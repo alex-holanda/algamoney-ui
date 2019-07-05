@@ -1,3 +1,4 @@
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CategoriaService } from './../pages/categorias/shared/categoria.service';
 import { PessoaService } from './../pages/pessoas/shared/pessoa.service';
 import { LancamentoService } from 'src/app/pages/lancamentos/shared/lancamento.service';
@@ -18,6 +19,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ErrorHandlerService } from './error-handler.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
+import { InterceptorService } from '../seguranca/interceptor.service';
 
 registerLocaleData(localePt);
 
@@ -54,6 +56,12 @@ providers: [
   JwtHelperService,
 
   Title,
+
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: InterceptorService,
+    multi: true
+  },
 
   { provide: LOCALE_ID, useValue: 'pt' }
 ]
