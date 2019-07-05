@@ -6,23 +6,24 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { PessoaFiltro } from './pessoa-filtro.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PessoaService {
 
-  pessoaUrl = 'http://localhost:8080/pessoas';
+  headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.getItem('token')});
+
+  pessoaUrl = `${environment.apiUrl}/pessoas`;
 
   constructor(
     private http: HttpClient
   ) { }
 
   adicionar(pessoa: Pessoa): Observable<Pessoa> {
-    const headers = new HttpHeaders()
-      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
 
-    return this.http.post(`${this.pessoaUrl}`, pessoa, { headers })
+    return this.http.post(`${this.pessoaUrl}`, pessoa, {headers: this.headers})
       .pipe(
         catchError(this.handleError),
         map(Pessoa.fromJson)
@@ -30,10 +31,8 @@ export class PessoaService {
   }
 
   atualizar(pessoa: Pessoa): Observable<Pessoa> {
-    const headers = new HttpHeaders()
-      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
 
-    return this.http.put(`${this.pessoaUrl}/${pessoa.codigo}`, pessoa, { headers })
+    return this.http.put(`${this.pessoaUrl}/${pessoa.codigo}`, pessoa, {headers: this.headers})
       .pipe(
         catchError(this.handleError),
         map(resp => {
@@ -43,10 +42,8 @@ export class PessoaService {
   }
 
   buscarPorCodigo(codigo: number): Observable<Pessoa> {
-    const headers = new HttpHeaders()
-      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
 
-    return this.http.get(`${this.pessoaUrl}/${codigo}`, { headers })
+    return this.http.get(`${this.pessoaUrl}/${codigo}`, {headers: this.headers})
       .pipe(
         catchError(this.handleError),
         map(resp => {
@@ -58,8 +55,6 @@ export class PessoaService {
   }
 
   pesquisar(filtro: PessoaFiltro): Observable<any> {
-    const headers = new HttpHeaders()
-      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
 
     let params = new HttpParams({
       fromObject: {
@@ -72,7 +67,7 @@ export class PessoaService {
       params = params.append('nome', filtro.nome);
     }
 
-    return this.http.get(this.pessoaUrl, { headers, params })
+    return this.http.get(this.pessoaUrl, {headers: this.headers, params})
       .pipe(
         catchError(this.handleError),
         map(resp => {
@@ -89,11 +84,12 @@ export class PessoaService {
   }
 
   atualizarPropriedade(codigo: number, ativo: boolean): Observable<any> {
-    const headers = new HttpHeaders()
-      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
+    // const headers = new HttpHeaders()
+    //  .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
+    const headers = new HttpHeaders({Authorization: 'Bearer ' + localStorage.getItem('token')})
       .append('Content-Type', 'application/json');
 
-    return this.http.put(`${this.pessoaUrl}/${codigo}/ativo`, ativo, { headers })
+    return this.http.put(`${this.pessoaUrl}/${codigo}/ativo`, ativo, {headers})
       .pipe(
         catchError(this.handleError),
         map( () => null )
@@ -101,10 +97,8 @@ export class PessoaService {
   }
 
   excluir(codigo: number): Observable<any> {
-    const headers = new HttpHeaders()
-      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
 
-    return this.http.delete(`${this.pessoaUrl}/${codigo}`, { headers })
+    return this.http.delete(`${this.pessoaUrl}/${codigo}`, {headers: this.headers})
       .pipe(
         catchError(this.handleError),
         map(() => null)
@@ -112,10 +106,8 @@ export class PessoaService {
   }
 
   pesquisarTodas() {
-    const headers = new HttpHeaders()
-      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
 
-    return this.http.get(this.pessoaUrl, { headers })
+    return this.http.get(this.pessoaUrl, {headers: this.headers})
       .pipe(
         catchError(this.handleError),
         map(resp => {

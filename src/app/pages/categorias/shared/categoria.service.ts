@@ -3,23 +3,21 @@ import { Injectable } from '@angular/core';
 
 import { catchError, map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriaService {
 
-  categoriaUrl = 'http://localhost:8080/categorias';
+  categoriaUrl = `${environment.apiUrl}/categorias`;
 
   constructor(
     private http: HttpClient
   ) { }
 
   listar() {
-    const headers = new HttpHeaders()
-      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
-
-    return this.http.get(`${this.categoriaUrl}`, { headers })
+    return this.http.get(`${this.categoriaUrl}`)
       .pipe(
         catchError(this.handleError),
         map(resp => resp)

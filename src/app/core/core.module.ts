@@ -9,7 +9,7 @@ import { Title } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import localePt from '@angular/common/locales/pt';
 
-import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { MessageService, ConfirmationService } from 'primeng/components/common/api';
 import { GrowlModule } from 'primeng/growl';

@@ -1,14 +1,16 @@
-import { JwtModule } from '@auth0/angular-jwt';
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+import { JwtModule } from '@auth0/angular-jwt';
 
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 
 import { SegurancaRoutingModule } from './seguranca-routing.module';
 import { LoginFormComponent } from './login-form/login-form.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -24,7 +26,9 @@ export function tokenGetter() {
     HttpClientModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter
+        tokenGetter,
+        whitelistedDomains: environment.tokenWhitelistedDomains,
+        blacklistedRoutes: environment.tokenWhitelistedDomains
       }
     }),
 
@@ -32,6 +36,9 @@ export function tokenGetter() {
     ButtonModule,
 
     SegurancaRoutingModule
+  ],
+  providers: [
+
   ]
 })
 export class SegurancaModule { }

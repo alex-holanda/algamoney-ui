@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHandler, HttpHeaders } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -9,23 +9,22 @@ import 'moment/locale/pt-br';
 
 import { Lancamento } from './lancamento.model';
 import { LancamentoFiltro } from './lancamento-filtro.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LancamentoService {
 
-  lancamentosUrl = 'http://localhost:8080/lancamentos';
+  lancamentosUrl = `${environment.apiUrl}/lancamentos`;
 
   constructor(
     private http: HttpClient
   ) { }
 
   atualizar(lancamento: Lancamento) {
-    const headers = new HttpHeaders()
-      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
 
-    return this.http.put(`${this.lancamentosUrl}/${lancamento.codigo}`, lancamento, { headers })
+    return this.http.put(`${this.lancamentosUrl}/${lancamento.codigo}`, lancamento)
       .pipe(
         catchError(this.handleError),
         map(resp => {
@@ -39,10 +38,8 @@ export class LancamentoService {
   }
 
   buscarPorCodigo(codigo: number): Observable<Lancamento> {
-    const headers = new HttpHeaders()
-      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
 
-    return this.http.get(`${this.lancamentosUrl}/${codigo}`, { headers } )
+    return this.http.get(`${this.lancamentosUrl}/${codigo}`)
       .pipe(
         catchError(this.handleError),
         map(resp => {
@@ -56,10 +53,8 @@ export class LancamentoService {
   }
 
   adicionar(lancamento: Lancamento): Observable<Lancamento> {
-    const headers = new HttpHeaders()
-      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
 
-    return this.http.post(`${this.lancamentosUrl}`, lancamento, { headers })
+    return this.http.post(`${this.lancamentosUrl}`, lancamento)
       .pipe(
         catchError(this.handleError),
         map(Lancamento.fromJson)
@@ -67,8 +62,7 @@ export class LancamentoService {
   }
 
   pesquisar(filtro: LancamentoFiltro): Observable<any> {
-    const headers = new HttpHeaders()
-      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+
     let params = new HttpParams({
       fromObject: {
         page: filtro.pagina.toString(),
@@ -90,7 +84,7 @@ export class LancamentoService {
         moment(filtro.dataVencimentoFim).format('YYYY-MM-DD'));
     }
 
-    return this.http.get(`${this.lancamentosUrl}?resumo`, { headers, params })
+    return this.http.get(`${this.lancamentosUrl}?resumo`, { params })
       .pipe(
         catchError(this.handleError),
         map(response => {
@@ -107,10 +101,8 @@ export class LancamentoService {
   }
 
   excluir(codigo: number): Observable<void> {
-    const headers = new HttpHeaders()
-      .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
 
-    return this.http.delete(`${this.lancamentosUrl}/${codigo}`, { headers })
+    return this.http.delete(`${this.lancamentosUrl}/${codigo}`)
       .pipe(
         catchError(this.handleError),
         map(() => null)
