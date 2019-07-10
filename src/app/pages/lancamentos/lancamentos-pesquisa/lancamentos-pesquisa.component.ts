@@ -1,3 +1,4 @@
+import { AuthService } from './../../../seguranca/auth.service';
 import { LancamentoFiltro } from '../shared/lancamento-filtro.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -26,7 +27,8 @@ export class LancamentosPesquisaComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private errorHandler: ErrorHandlerService,
-    private title: Title
+    private title: Title,
+    private auth: AuthService
   ) { }
 
   ngOnInit() {

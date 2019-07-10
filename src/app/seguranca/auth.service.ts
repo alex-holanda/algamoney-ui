@@ -68,6 +68,23 @@ export class AuthService {
     return this.jwtPayload && this.jwtPayload.authorities.includes(permissao);
   }
 
+  temQualquerPermissao(roles) {
+    for (const role of roles) {
+      if (this.temPermissao(role)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  carregarToken() {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      this.armazenarToken(token);
+    }
+  }
+
   private handleError(error: any): Observable<any> {
 
     if (error.status === 400) {
@@ -82,13 +99,5 @@ export class AuthService {
   private armazenarToken(token: string) {
     this.jwtPayload = this.jwtHelper.decodeToken(token);
     localStorage.setItem('token', token);
-  }
-
-  carregarToken() {
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      this.armazenarToken(token);
-    }
   }
 }
