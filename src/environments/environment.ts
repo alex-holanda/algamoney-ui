@@ -3,12 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  production: true,
 
-  apiUrl: 'http://localhost:8080',
+  apiUrl: 'https://algamoney-curso.herokuapp.com',
 
-  tokenWhitelistedDomains: [new RegExp('localhost:8080') ],
-  tokenBlacklistedRoutes: [new RegExp('\/oauth\/token/') ]
+  tokenWhitelistedDomains: [ new RegExp('algamoney-curso.herokuapp.com') ],
+  tokenBlacklistedRoutes: [ new RegExp('\/oauth\/token/') ]
 };
 
 /*
