@@ -7,6 +7,7 @@ import { catchError, mergeMap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { AuthService } from 'src/app/seguranca/auth.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ import { AuthService } from 'src/app/seguranca/auth.service';
 export class InterceptorService implements HttpInterceptor {
 
   constructor(
-    private auth: AuthService
+    private auth: AuthService,
+    private router: Router
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -23,8 +25,10 @@ export class InterceptorService implements HttpInterceptor {
       return next.handle(request);
     }
 
-    const headers = new HttpHeaders({Authorization: `Bearer ${localStorage.getItem('token')}`})
-                            .append('Content-Type', 'application/json');
+    const token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders({Authorization: `Bearer ${token}`})
+                          .append('Content-Type', 'application/json');
 
     request = request.clone({ headers });
 
@@ -38,7 +42,7 @@ export class InterceptorService implements HttpInterceptor {
                 .append('Content-Type', 'application/json');
               request = request.clone({ headers: h });
               return next.handle(request);
-            })
+            }),
           );
         }
         return throwError(error);

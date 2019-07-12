@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, share } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -41,6 +41,11 @@ export class AuthService {
       );
   }
 
+  limparAccessToken() {
+    localStorage.removeItem('token');
+    this.jwtPayload = null;
+  }
+
   obterNovoAccessToken(): Observable<string> {
     const headers = new HttpHeaders()
       .append('Content-Type', 'application/x-www-form-urlencoded')
@@ -51,6 +56,7 @@ export class AuthService {
     return this.http.post(`${this.oauthTokenUrl}`, body,
       { headers, withCredentials: true })
       .pipe(
+        share(),
         catchError(this.handleError),
         map(resp => {
           this.armazenarToken(resp.access_token);

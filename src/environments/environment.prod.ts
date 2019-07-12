@@ -3,6 +3,6 @@ export const environment = {
 
   apiUrl: '',
 
-  tokenWhitelistedDomains: [/sg/],
-  tokenBlacklistedRoutes: [/\oauth\/token/]
+  tokenWhitelistedDomains: [ new RegExp('algamoney-curso.herokuapp.com') ],
+  tokenBlacklistedRoutes: [ new RegExp('\/oauth\/token/') ]
 };
