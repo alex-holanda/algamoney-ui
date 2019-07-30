@@ -1,3 +1,4 @@
+import { DashboardService } from './../pages/dashboard/shared/dashboard.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CategoriaService } from './../pages/categorias/shared/categoria.service';
 import { PessoaService } from './../pages/pessoas/shared/pessoa.service';
@@ -52,6 +53,7 @@ providers: [
   LancamentoService,
   PessoaService,
   CategoriaService,
+  DashboardService,
 
   AuthService,
 
