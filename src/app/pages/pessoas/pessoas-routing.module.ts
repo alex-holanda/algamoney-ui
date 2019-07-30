@@ -7,7 +7,7 @@ import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.compo
 
 const routes: Routes = [
   {
-    path: 'pessoas',
+    path: '',
     component: PessoasPesquisaComponent,
     canActivate: [AuthGuard],
     data: {
@@ -15,7 +15,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'pessoas/novo',
+    path: 'novo',
     component: PessoaCadastroComponent,
     canActivate: [AuthGuard],
     data: {
@@ -23,7 +23,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'pessoas/:codigo',
+    path: ':codigo',
     component: PessoaCadastroComponent,
     canActivate: [AuthGuard],
     data: {
@@ -33,7 +33,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
 export class PessoasRoutingModule { }

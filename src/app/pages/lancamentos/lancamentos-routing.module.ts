@@ -7,7 +7,7 @@ import { AuthGuard } from 'src/app/seguranca/auth.guard';
 
 const routes: Routes = [
   {
-    path: 'lancamentos',
+    path: '',
     component: LancamentosPesquisaComponent,
     canActivate: [AuthGuard],
     data: {
@@ -15,7 +15,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'lancamentos/novo',
+    path: 'novo',
     component: LancamentoCadastroComponent,
     canActivate: [AuthGuard],
     data: {
@@ -23,7 +23,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'lancamentos/:codigo',
+    path: ':codigo',
     component: LancamentoCadastroComponent,
     canActivate: [AuthGuard],
     data: {

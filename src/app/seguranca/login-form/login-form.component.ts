@@ -30,7 +30,7 @@ export class LoginFormComponent implements OnInit {
       this.formulario.get('senha').value)
       .subscribe(
         () => {
-          this.router.navigate(['/lancamentos']);
+          this.router.navigate(['/dashboard']);
         },
         error => {
           this.formulario.get('senha').patchValue('');

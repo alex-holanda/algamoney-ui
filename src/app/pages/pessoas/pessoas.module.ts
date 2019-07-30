@@ -31,7 +31,7 @@ import { PessoasRoutingModule } from './pessoas-routing.module';
     TableModule,
     TooltipModule,
     InputTextareaModule,
-    BrowserAnimationsModule,
+
     CalendarModule,
     SelectButtonModule,
     DropdownModule,

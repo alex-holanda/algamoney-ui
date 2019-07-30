@@ -5,7 +5,11 @@ import { PaginaNaoEncontradaComponent } from './core/pagina-nao-encontrada.compo
 import { NaoAutorizadoComponent } from './core/nao-autorizado.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'lancamentos', pathMatch: 'full' },
+  { path: 'lancamentos', loadChildren: './pages/lancamentos/lancamentos.module#LancamentosModule' },
+  { path: 'pessoas', loadChildren: './pages/pessoas/pessoas.module#PessoasModule' },
+  { path: 'dashboard', loadChildren: './pages/dashboard/dashboard.module#DashboardModule' },
+
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'nao-autorizado', component: NaoAutorizadoComponent },
   { path: '**', component: PaginaNaoEncontradaComponent }
 ];

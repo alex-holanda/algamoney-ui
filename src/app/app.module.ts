@@ -6,8 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 
-import { LancamentosModule } from './pages/lancamentos/lancamentos.module';
-import { PessoasModule } from './pages/pessoas/pessoas.module';
+
 import { SegurancaModule } from './seguranca/seguranca.module';
 
 @NgModule({
@@ -17,9 +16,6 @@ import { SegurancaModule } from './seguranca/seguranca.module';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-
-    LancamentosModule,
-    PessoasModule,
 
     CoreModule,
     SegurancaModule,
