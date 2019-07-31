@@ -1,9 +1,8 @@
-import { LancamentoEstatisticaCategoria } from './../shared/lancamento-estatistica-categoria.model';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { Component, OnInit } from '@angular/core';
 
 import { DashboardService } from '../shared/dashboard.service';
-import { map } from 'rxjs/operators';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,9 +14,24 @@ export class DashboardComponent implements OnInit {
   pieChartData: any;
   lineChartData: any;
 
+  options = {
+    tooltips: {
+      callbacks: {
+        label: (tooltipItem, data) => {
+          const dataset = data.datasets[tooltipItem.datasetIndex];
+          const valor = dataset.data[tooltipItem.index];
+          const label = dataset.label ? (dataset.label + ': ') : '';
+
+          return label + this.decimalPipe.transform(valor, '1.2-2');
+        }
+      }
+    }
+  };
+
   constructor(
     private dashboardService: DashboardService,
     private errorHandler: ErrorHandlerService,
+    private decimalPipe: DecimalPipe
   ) { }
 
   ngOnInit() {
