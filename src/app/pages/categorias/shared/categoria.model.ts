@@ -1,6 +1,7 @@
 export class Categoria {
   constructor(
-    public codigo?: number
+    public codigo?: number,
+    public nome?: string
   ) { }
 
   static fromJson(jsonData: any) {

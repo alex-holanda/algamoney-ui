@@ -8,7 +8,7 @@ import * as moment from 'moment';
 
 import { environment } from 'src/environments/environment';
 
-import { Lancamento } from '../../lancamentos/shared/lancamento.model';
+import { LancamentoEstatisticaCategoria } from './lancamento-estatistica-categoria.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +23,15 @@ export class DashboardService {
     this.lancamentosUrl = `${environment.apiUrl}/lancamentos`;
   }
 
-  lancamentosPorCategoria(): Observable<any> {
+  lancamentosPorCategoria(): Observable<Array<LancamentoEstatisticaCategoria>> {
     return this.http.get(`${this.lancamentosUrl}/estatisticas/por-categoria`)
       .pipe(
         catchError(this.handleError),
-        map(resp => Lancamento.fromJson(resp))
+        map(resp => {
+          const lancamentoEstatisticaCategoria: Array<LancamentoEstatisticaCategoria> = resp;
+
+          return lancamentoEstatisticaCategoria;
+        })
       );
   }
 
@@ -35,9 +39,7 @@ export class DashboardService {
     return this.http.get(`${this.lancamentosUrl}/estatisticas/por-dia`)
       .pipe(
         catchError(this.handleError),
-        map(resp => {
-          this.converterStringsParaDatas(resp);
-        })
+        map(resp => this.converterStringsParaDatas(resp))
       );
   }
 
