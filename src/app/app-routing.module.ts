@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'lancamentos', loadChildren: './pages/lancamentos/lancamentos.module#LancamentosModule' },
   { path: 'pessoas', loadChildren: './pages/pessoas/pessoas.module#PessoasModule' },
   { path: 'dashboard', loadChildren: './pages/dashboard/dashboard.module#DashboardModule' },
+  { path: 'relatorios', loadChildren: './pages/relatorios/relatorios.module#RelatoriosModule' },
 
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'nao-autorizado', component: NaoAutorizadoComponent },

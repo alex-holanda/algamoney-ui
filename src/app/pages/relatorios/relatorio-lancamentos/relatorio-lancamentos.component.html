@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h1>Relatório de lançamentos por pessoa</h1>
+    </div>
+
+    <form [formGroup]="formulario">
+      <div class="ui-g">
+        <div class="ui-g-12">
+          <label style="display: block">Vencimento</label>
+          <p-calendar id="inicio" formControlName="inicio"
+            dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false"
+            [showIcon]="false"></p-calendar>
+          até
+          <p-calendar id="fim" formControlName="fim"
+            dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false"
+            [showIcon]="false"></p-calendar>
+        </div>
+
+        <div class="ui-g-12">
+          <button pButton type="submit" label="Gerar"
+            [disabled]="formulario.invalid"></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

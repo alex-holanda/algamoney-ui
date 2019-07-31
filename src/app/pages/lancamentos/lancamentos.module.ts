@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -27,7 +27,6 @@ import { LancamentoRoutingModule } from './lancamentos-routing.module';
   ],
   imports: [
     CommonModule,
-    FormsModule,
     ReactiveFormsModule,
 
     InputTextModule,
