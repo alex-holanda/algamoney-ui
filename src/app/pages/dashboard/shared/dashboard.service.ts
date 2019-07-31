@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
 
 import { LancamentoEstatisticaCategoria } from './lancamento-estatistica-categoria.model';
+import { LancamentoEstatisticaDia } from './lancamento-estatistica-dia.model';
 
 @Injectable({
   providedIn: 'root'
@@ -35,11 +36,16 @@ export class DashboardService {
       );
   }
 
-  lancamentosPorDia(): Observable<any> {
+  lancamentosPorDia(): Observable<Array<LancamentoEstatisticaDia>> {
     return this.http.get(`${this.lancamentosUrl}/estatisticas/por-dia`)
       .pipe(
         catchError(this.handleError),
-        map(resp => this.converterStringsParaDatas(resp))
+        map(resp => {
+          const lancamentoEstatisticaDia: Array<LancamentoEstatisticaDia> = resp;
+          this.converterStringsParaDatas(lancamentoEstatisticaDia);
+
+          return lancamentoEstatisticaDia;
+        })
       );
   }
 

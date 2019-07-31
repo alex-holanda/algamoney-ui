@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.configurarGraficoPizza();
-    // this.configurarGraficaLinha();
+    this.configurarGraficaLinha();
   }
 
   configurarGraficoPizza() {
