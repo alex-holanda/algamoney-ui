@@ -1,9 +1,4 @@
-import { DashboardService } from './../pages/dashboard/shared/dashboard.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CategoriaService } from './../pages/categorias/shared/categoria.service';
-import { PessoaService } from './../pages/pessoas/shared/pessoa.service';
-import { LancamentoService } from 'src/app/pages/lancamentos/shared/lancamento.service';
-import { AuthService } from './../seguranca/auth.service';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { registerLocaleData } from '@angular/common';
@@ -22,6 +17,13 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 import { InterceptorService } from '../seguranca/interceptor.service';
 import { NaoAutorizadoComponent } from './nao-autorizado.component';
+
+import { AuthService } from './../seguranca/auth.service';
+import { LancamentoService } from 'src/app/pages/lancamentos/shared/lancamento.service';
+import { RelatoriosService } from './../pages/relatorios/shared/relatorios.service';
+import { DashboardService } from './../pages/dashboard/shared/dashboard.service';
+import { CategoriaService } from './../pages/categorias/shared/categoria.service';
+import { PessoaService } from './../pages/pessoas/shared/pessoa.service';
 
 registerLocaleData(localePt);
 
@@ -54,6 +56,7 @@ providers: [
   PessoaService,
   CategoriaService,
   DashboardService,
+  RelatoriosService,
 
   AuthService,
 

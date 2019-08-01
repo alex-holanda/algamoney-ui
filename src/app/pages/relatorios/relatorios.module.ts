@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 
 import { CalendarModule } from 'primeng/calendar';
 
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+
 import { RelatoriosRoutingModule } from './relatorios-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RelatorioLancamentosComponent } from './relatorio-lancamentos/relatorio-lancamentos.component';
@@ -17,6 +19,8 @@ import { RelatorioLancamentosComponent } from './relatorio-lancamentos/relatorio
     SharedModule,
 
     CalendarModule,
+
+    PdfViewerModule,
 
     RelatoriosRoutingModule
   ]

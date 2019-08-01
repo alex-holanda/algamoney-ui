@@ -4,7 +4,7 @@
       <h1>Relatório de lançamentos por pessoa</h1>
     </div>
 
-    <form [formGroup]="formulario">
+    <form [formGroup]="formulario" (ngSubmit)="gerar()">
       <div class="ui-g">
         <div class="ui-g-12">
           <label style="display: block">Vencimento</label>
@@ -18,10 +18,18 @@
         </div>
 
         <div class="ui-g-12">
-          <button pButton type="submit" label="Gerar"
+          <button pButton type="submit" label="Gerar" style="margin-right: 5px;"
+            [disabled]="formulario.invalid"></button>
+
+          <button pButton type="button" label="Download" (click)="download()"
             [disabled]="formulario.invalid"></button>
         </div>
       </div>
     </form>
+
+    <div class="col-ui-g">
+      <pdf-viewer [src]="src"
+              [original-size]="false" [fit-to-page]="true"></pdf-viewer>
+    </div>
   </div>
 </div>
