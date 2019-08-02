@@ -44,11 +44,7 @@ export class PessoaService {
     return this.http.get(`${this.pessoaUrl}/${codigo}`)
       .pipe(
         catchError(this.handleError),
-        map(resp => {
-          const p = Pessoa.fromJson(resp);
-
-          return p;
-        })
+        map(resp => Pessoa.fromJson(resp))
       );
   }
 

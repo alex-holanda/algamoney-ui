@@ -2,7 +2,7 @@
   <form (ngSubmit)="salvar()" [formGroup]="formulario" autocomplete="off">
     <div class="ui-g">
       <div class="ui-g-12">
-        <h1>Nova Pessoa</h1>
+        <h1>{{ editando ? 'Edição de' : 'Nova' }} Pessoa</h1>
       </div>
 
       <div class="ui-g-12 ui-fluid">
@@ -51,15 +51,20 @@
       </div>
 
       <div class="ui-g-12">
-          <p-button [disabled]="formulario.invalid" type="submit" label="Salvar" class="ui-button-primary"></p-button>
+        <p-panel header="Contatos">
+          <app-pessoa-cadastro-contato [contatos]="formulario.value.contatos"></app-pessoa-cadastro-contato>
+        </p-panel>
+      </div>
+
+      <div class="ui-g-12">
+          <p-button [disabled]="formulario.invalid" type="submit" label="Salvar"
+            style="margin-right: 5px;"></p-button>
 
           <p-button type="button" label="Novo" class="ui-button-info"
-            (click)="novo()"></p-button>
+            (click)="novo()" style="margin-right: 5px;"></p-button>
 
           <a routerLink="/pessoas">Voltar para a pesquisa</a>
       </div>
     </div>
   </form>
 </div>
-
-<pre>{{ formulario.value | json }}</pre>

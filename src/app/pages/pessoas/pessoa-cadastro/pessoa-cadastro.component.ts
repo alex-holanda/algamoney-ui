@@ -1,4 +1,5 @@
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Contato } from './../shared/contato.model';
+import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
@@ -17,6 +18,7 @@ import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 export class PessoaCadastroComponent implements OnInit {
 
   formulario: FormGroup;
+  formularioContato: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,7 +28,7 @@ export class PessoaCadastroComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private title: Title
-  ) { }
+  ) {  }
 
   ngOnInit() {
     this.title.setTitle('Nova Pessoa');
@@ -82,11 +84,29 @@ export class PessoaCadastroComponent implements OnInit {
     this.pessoaService.buscarPorCodigo(codigo)
       .subscribe(
         resp => {
-          this.formulario.patchValue(resp);
           this.atualizarTitulo(resp.nome);
+
+          const contatosFormArray = this.formulario.get('contatos') as FormArray;
+
+          resp.contatos.forEach(
+            () => {
+              contatosFormArray.push(this.createContatosFormGroup());
+            }
+          );
+
+          this.formulario.patchValue(resp);
         },
         error => this.errorHandler.handle(error)
       );
+  }
+
+  private createContatosFormGroup(): FormGroup {
+    return this.formBuilder.group({
+      codigo: [],
+      nome: [null, [Validators.required]],
+      email: [null, [Validators.email, Validators.required]],
+      telefone: []
+    });
   }
 
   private atualizarTitulo(nome: string) {
@@ -121,6 +141,7 @@ export class PessoaCadastroComponent implements OnInit {
         cidade: [null, Validators.required],
         estado: [null, Validators.required]
       }),
+      contatos: this.formBuilder.array([]),
       ativo: [true]
     });
   }

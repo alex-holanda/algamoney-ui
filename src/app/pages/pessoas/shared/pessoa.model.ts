@@ -1,3 +1,4 @@
+import { Contato } from './contato.model';
 import { Endereco } from './endereco.model';
 
 export class Pessoa {
@@ -5,7 +6,8 @@ export class Pessoa {
     public codigo?: number,
     public nome?: string,
     public ativo?: boolean,
-    public endereco?: Endereco
+    public endereco?: Endereco,
+    public contatos?: Array<Contato>
   ) { }
 
   static fromJson(jsonData: any): Pessoa {

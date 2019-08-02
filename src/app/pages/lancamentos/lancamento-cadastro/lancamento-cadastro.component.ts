@@ -80,8 +80,6 @@ export class LancamentoCadastroComponent implements OnInit {
   private atualizar() {
     const lancamento: Lancamento = Lancamento.fromJson(this.formulario.value);
 
-    console.log('Atualizando: ', lancamento);
-
     this.lancamentoService.atualizar(lancamento)
       .subscribe(
         resp => {
