@@ -17,6 +17,8 @@ export class PessoaCadastroContatoComponent implements OnInit {
 
   exibindoFormularioContato = false;
 
+  editando = false;
+
   constructor(
     private formBuilder: FormBuilder
   ) { }
@@ -24,12 +26,29 @@ export class PessoaCadastroContatoComponent implements OnInit {
   ngOnInit() {
 
     this.configurarFormulario();
+    this.contatoIndex = this.contatos.length;
   }
 
   salvarContato() {
-    this.contatos.push(Contato.fromJson(this.formularioContato.value));
+    if (this.editando) {
+      this.contatos[this.contatoIndex] = Contato.fromJson(this.formularioContato.value);
+    } else {
+      this.contatos.push(Contato.fromJson(this.formularioContato.value));
+    }
     this.formularioContato.reset();
     this.exibindoFormularioContato = false;
+    this.editando = false;
+  }
+
+  editarContato(contato: Contato, index: number) {
+    this.formularioContato.patchValue(contato);
+    this.exibindoFormularioContato = true;
+    this.contatoIndex = index;
+    this.editando = true;
+  }
+
+  removerContato(index: number) {
+    this.contatos.splice(index, 1);
   }
 
   prepararNovoContato() {
@@ -43,5 +62,9 @@ export class PessoaCadastroContatoComponent implements OnInit {
       email: [null, [Validators.email, Validators.required]],
       telefone: []
     });
+  }
+
+  fecharDialog() {
+    this.formularioContato.reset();
   }
 }

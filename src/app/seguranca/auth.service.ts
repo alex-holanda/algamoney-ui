@@ -46,6 +46,10 @@ export class AuthService {
     this.jwtPayload = null;
   }
 
+  obterToken() {
+    return localStorage.getItem('token');
+  }
+
   obterNovoAccessToken(): Observable<string> {
     const headers = new HttpHeaders()
       .append('Content-Type', 'application/x-www-form-urlencoded')

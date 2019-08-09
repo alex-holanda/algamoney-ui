@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpEvent, HttpHandler, HttpHeaders } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpEvent, HttpHandler, HttpHeaders, HttpResponse } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
-
-import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { AuthService } from 'src/app/seguranca/auth.service';
 import { Router } from '@angular/router';
@@ -15,8 +13,7 @@ import { Router } from '@angular/router';
 export class InterceptorService implements HttpInterceptor {
 
   constructor(
-    private auth: AuthService,
-    private router: Router
+    private auth: AuthService
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -25,12 +22,9 @@ export class InterceptorService implements HttpInterceptor {
       return next.handle(request);
     }
 
-    const token = localStorage.getItem('token');
-
-    const headers = new HttpHeaders({Authorization: `Bearer ${token}`})
-                          .append('Content-Type', 'application/json');
-
-    request = request.clone({ headers });
+    if (this.auth.obterToken()) {
+      request = this.addToken(request, this.auth.obterToken());
+    }
 
     return next.handle(request).pipe(
       catchError(error => {
@@ -48,5 +42,12 @@ export class InterceptorService implements HttpInterceptor {
         return throwError(error);
       })
     );
+  }
+
+  private addToken(request: HttpRequest<any>, token: string) {
+    const headers = new HttpHeaders({Authorization: `Bearer ${token}`})
+                          .append('Content-Type', 'application/json');
+
+    return request.clone({ headers });
   }
 }
