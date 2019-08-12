@@ -32,9 +32,7 @@ export class InterceptorService implements HttpInterceptor {
           return this.auth.obterNovoAccessToken().pipe(
             mergeMap((newToken: string) => {
               console.log('novo access_token');
-              const h = new HttpHeaders({Authorization: `Bearer ${newToken}`})
-                .append('Content-Type', 'application/json');
-              request = request.clone({ headers: h });
+              request = this.addToken(request, newToken);
               return next.handle(request);
             }),
           );
@@ -45,8 +43,13 @@ export class InterceptorService implements HttpInterceptor {
   }
 
   private addToken(request: HttpRequest<any>, token: string) {
-    const headers = new HttpHeaders({Authorization: `Bearer ${token}`})
-                          .append('Content-Type', 'application/json');
+    const headers = new HttpHeaders({Authorization: `Bearer ${token}`});
+
+    if (!request.url.includes('/lancamentos/anexo')) {
+      headers.append('Content-Type', 'application/json');
+    } else {
+      headers.append('Content-Type', 'multipart/form-data');
+    }
 
     return request.clone({ headers });
   }

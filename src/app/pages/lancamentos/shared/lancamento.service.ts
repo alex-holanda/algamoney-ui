@@ -19,7 +19,11 @@ export class LancamentoService {
 
   constructor(
     private http: HttpClient
-  ) { }
+    ) { }
+
+  urlUploadAnexo(): string {
+    return `${this.lancamentosUrl}/anexo`;
+  }
 
   atualizar(lancamento: Lancamento) {
 

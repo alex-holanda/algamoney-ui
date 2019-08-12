@@ -11,7 +11,9 @@ export class Lancamento {
     public valor?: number,
     public pessoa?: Pessoa,
     public categoria?: Categoria,
-    public observacao?: string
+    public observacao?: string,
+    public anexo?: string,
+    public urlAnexo?: string
   ) { }
 
   static tipos = [

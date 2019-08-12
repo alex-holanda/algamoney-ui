@@ -12,6 +12,8 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputMaskModule } from 'primeng/inputmask';
 import { MessageModule } from 'primeng/message';
+import { FileUploadModule } from 'primeng/fileupload';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 
@@ -40,6 +42,8 @@ import { LancamentoRoutingModule } from './lancamentos-routing.module';
     InputMaskModule,
     MessageModule,
     CurrencyMaskModule,
+    FileUploadModule,
+    ProgressSpinnerModule,
 
     SharedModule,
     LancamentoRoutingModule
