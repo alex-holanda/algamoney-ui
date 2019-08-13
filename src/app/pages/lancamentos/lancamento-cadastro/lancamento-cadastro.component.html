@@ -82,7 +82,7 @@
 
       <div class="ui-g-12">
         <button pButton type="submit" label="Salvar" class="ui-button-primary" style="margin-right: 5px"
-          [disabled]="formulario.invalid"></button>
+          [disabled]="formulario.invalid || uploadEmAndamento"></button>
 
         <button pButton type="button" label="Novo" class="ui-button-info" style="margin-right: 5px"
           (click)="novo()"></button>
