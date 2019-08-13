@@ -115,6 +115,13 @@ export class LancamentoCadastroComponent implements OnInit {
     this.router.navigate(['/lancamentos/novo']);
   }
 
+  removerAnexo() {
+    this.formulario.patchValue({
+      anexo: null,
+      urlAnexo: null
+    });
+  }
+
   // MÉTODOS PRIVADOS
   private atualizar() {
     const lancamento: Lancamento = Lancamento.fromJson(this.formulario.value);
