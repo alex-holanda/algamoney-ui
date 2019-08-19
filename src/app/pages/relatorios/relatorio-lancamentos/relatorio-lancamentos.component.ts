@@ -46,7 +46,7 @@ export class RelatorioLancamentosComponent implements OnInit {
     });
   }
 
-  download(resp) {
+  download() {
     const link = document.createElement('a');
     link.href = this.src;
     link.download = `relatorio.pdf`;
