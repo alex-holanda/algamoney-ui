@@ -7,6 +7,8 @@ import { map, catchError } from 'rxjs/operators';
 
 import { PessoaFiltro } from './pessoa-filtro.model';
 import { environment } from 'src/environments/environment';
+import { Estado } from './estado.model';
+import { Cidade } from './cidade.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,8 @@ import { environment } from 'src/environments/environment';
 export class PessoaService {
 
   pessoaUrl = `${environment.apiUrl}/pessoas`;
+  cidadesUrl = `${environment.apiUrl}/cidades`;
+  estadorUrl =  `${environment.apiUrl}/estados`;
 
   constructor(
     private http: HttpClient
@@ -116,5 +120,39 @@ export class PessoaService {
 
   private handleError(error: any): Observable<any> {
     return throwError(error);
+  }
+
+  listarEstados(): Observable<Array<Estado>> {
+
+    return this.http.get(this.estadorUrl)
+      .pipe(
+        catchError(this.handleError),
+        map(estados => this.jsonDataToResources(estados))
+      );
+  }
+
+  private jsonDataToResources(jsonData: any[]): Array<Estado> {
+    const estados: Array<Estado> = [];
+
+    jsonData.forEach(
+      e => {
+        const estado = Estado.fromJson(e);
+        estados.push(Estado.fromJson(estado));
+      }
+    );
+
+    return estados;
+  }
+
+  pesquisarCidades(estado): Observable<Array<Cidade>> {
+    const params = new HttpParams();
+
+    params.set('estado', estado);
+
+    return this.http.get(this.cidadesUrl, { params })
+      .pipe(
+        catchError(this.handleError),
+        map(cidades => Cidade.jsonDataToResources(cidades))
+      );
   }
 }
