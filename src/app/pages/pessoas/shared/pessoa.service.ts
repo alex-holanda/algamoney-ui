@@ -85,7 +85,10 @@ export class PessoaService {
     // const headers = new HttpHeaders()
     //  .set('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
 
-    return this.http.put(`${this.pessoaUrl}/${codigo}/ativo`, ativo)
+    const headers = new HttpHeaders()
+        .append('Content-Type', 'application/json');
+
+    return this.http.put(`${this.pessoaUrl}/${codigo}/ativo`, ativo, { headers })
       .pipe(
         catchError(this.handleError),
         map( () => null )

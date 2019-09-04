@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 
 import { LazyLoadEvent, MessageService, ConfirmationService } from 'primeng/components/common/api';
 
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { PessoaFiltro } from '../shared/pessoa-filtro.model';
 import { PessoaService } from '../shared/pessoa.service';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-pessoas-pesquisa',

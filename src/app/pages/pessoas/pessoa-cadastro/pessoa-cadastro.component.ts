@@ -164,7 +164,7 @@ export class PessoaCadastroComponent implements OnInit {
         cidade: this.formBuilder.group({
           codigo: [null, Validators.required],
           estado: this.formBuilder.group({
-            codigo: [],
+            codigo: [null, Validators.required],
           })
         })
       }),

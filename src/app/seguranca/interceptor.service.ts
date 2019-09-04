@@ -43,12 +43,10 @@ export class InterceptorService implements HttpInterceptor {
   }
 
   private addToken(request: HttpRequest<any>, token: string) {
-    const headers = new HttpHeaders({Authorization: `Bearer ${token}`});
+    let headers = new HttpHeaders({Authorization: `Bearer ${token}`});
 
     if (!request.url.includes('/lancamentos/anexo')) {
-      headers.append('Content-Type', 'application/json');
-    } else {
-      headers.append('Content-Type', 'multipart/form-data');
+      headers = headers.append('Content-Type', 'application/json');
     }
 
     return request.clone({ headers });
