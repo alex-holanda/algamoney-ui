@@ -39,15 +39,21 @@
           <p-inputMask mask="99.999-999" id="cep" formControlName="cep"></p-inputMask>
         </div>
 
-        <div class="ui-g-12 ui-md-6 ui-fluid">
-          <label>Cidade</label>
-          <input pInputText type="text" id="cidade" formControlName="cidade"/>
+        <div formGroupName="cidade">
+          <div class="ui-g-12 ui-md-6 ui-fluid" formGroupName="estado">
+            <label>Estado</label>
+            <p-dropdown placeholder="Selecione..." [autoWidth]="true" [filter]="true"
+              [options]="estados" formControlName="codigo"
+              [(ngModel)]="estadoSelecionado" (onChange)="carregarCidades()"></p-dropdown>
+          </div>
+
+          <div class="ui-g-12 ui-md-6 ui-fluid">
+            <label>Cidade</label>
+            <p-dropdown placeholder="Selecione..." [autoWidth]="true" [filter]="true"
+              [options]="cidades" formControlName="codigo"></p-dropdown>
+          </div>
         </div>
 
-        <div class="ui-g-12 ui-md-6 ui-fluid">
-          <label>Estado</label>
-          <input pInputText type="text" id="estado" formControlName="estado"/>
-        </div>
       </div>
 
       <div class="ui-g-12">
@@ -68,3 +74,5 @@
     </div>
   </form>
 </div>
+
+<pre>{{ formulario.value | json }}</pre>

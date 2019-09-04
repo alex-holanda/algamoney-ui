@@ -11,4 +11,10 @@ export class Estado {
     return Object.assign(new Estado(), jsonData);
   }
 
+  static fromJsonDataToResources(jsonData: any): Array<Estado> {
+    const estados: Array<Estado> = [];
+    jsonData.forEach( e => estados.push(Estado.fromJson(e)) );
+    return estados;
+  }
+
 }

@@ -1,4 +1,3 @@
-import { Contato } from './../shared/contato.model';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -19,6 +18,9 @@ export class PessoaCadastroComponent implements OnInit {
 
   formulario: FormGroup;
   formularioContato: FormGroup;
+  estados: Array<any> = [];
+  cidades: Array<any> = [];
+  estadoSelecionado: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,10 +42,29 @@ export class PessoaCadastroComponent implements OnInit {
     }
 
     this.configurarFormulario();
+    this.carregarEstados();
   }
 
   get editando() {
     return Boolean(this.formulario.get('codigo').value);
+  }
+
+  carregarEstados() {
+    this.pessoaService.listarEstados().subscribe(
+      resp => {
+        this.estados = resp.map(e => ({ label: e.nome, value: e.codigo }));
+      },
+      error => this.errorHandler.handle(error)
+    );
+  }
+
+  carregarCidades() {
+    this.pessoaService.pesquisarCidades(this.estadoSelecionado.toString()).subscribe(
+      resp => {
+        this.cidades = resp.map( e => ({label: e.nome, value: e.codigo}) );
+      },
+      error => this.errorHandler.handle(error)
+    );
   }
 
   salvar() {
@@ -93,8 +114,10 @@ export class PessoaCadastroComponent implements OnInit {
               contatosFormArray.push(this.createContatosFormGroup());
             }
           );
-
           this.formulario.patchValue(resp);
+
+          this.estadoSelecionado = resp.endereco.cidade.estado.codigo;
+          this.carregarCidades();
         },
         error => this.errorHandler.handle(error)
       );
@@ -138,8 +161,12 @@ export class PessoaCadastroComponent implements OnInit {
         complemento: [],
         bairro: [null, Validators.required],
         cep: [null, Validators.required],
-        cidade: [null, Validators.required],
-        estado: [null, Validators.required]
+        cidade: this.formBuilder.group({
+          codigo: [null, Validators.required],
+          estado: this.formBuilder.group({
+            codigo: [],
+          })
+        })
       }),
       contatos: this.formBuilder.array([]),
       ativo: [true]

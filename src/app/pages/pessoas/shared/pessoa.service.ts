@@ -144,10 +144,8 @@ export class PessoaService {
     return estados;
   }
 
-  pesquisarCidades(estado): Observable<Array<Cidade>> {
-    const params = new HttpParams();
-
-    params.set('estado', estado);
+  pesquisarCidades(estado: string): Observable<Array<Cidade>> {
+    const params = new HttpParams().append('estado', estado);
 
     return this.http.get(this.cidadesUrl, { params })
       .pipe(
