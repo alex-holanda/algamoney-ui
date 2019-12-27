@@ -29,7 +29,7 @@ export class InterceptorService implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError(error => {
         if (error.status === 401 && error.error.error_description.includes('Access token expired')) {
-          return this.auth.obterNovoAccessToken().pipe(
+          return this.auth.obterNovoAccessTokenObservable().pipe(
             mergeMap((newToken: string) => {
               console.log('novo access_token');
               request = this.addToken(request, newToken);

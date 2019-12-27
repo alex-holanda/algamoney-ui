@@ -50,7 +50,7 @@
           <div class="ui-g-12 ui-md-6 ui-fluid">
             <label>Cidade</label>
             <p-dropdown placeholder="Selecione..." [autoWidth]="true" [filter]="true"
-              [options]="cidades" formControlName="codigo"></p-dropdown>
+              [options]="cidades" formControlName="codigo" [disabled]="!estadoSelecionado"></p-dropdown>
           </div>
         </div>
 
