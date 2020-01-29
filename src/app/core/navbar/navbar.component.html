@@ -1,27 +1,27 @@
-<nav class="navbar">
-  <div class="container">
-    <div class="ui-g">
-      <div class="ui-g-12">
-        <a href="javascript:;" class="navbar-toggle" (click)="exibindoMenu=!exibindoMenu"><i class="pi pi-bars"></i></a>
-      </div>
-    </div>
+<nav>
+  <div class="navbar-usuario">{{ auth.jwtPayload?.nome }}</div>
+  <div class="toggle">
+    <span (click)="exibindoMenu=!exibindoMenu">Menu</span>
   </div>
+  <ul [ngClass]="{'active' : exibindoMenu}">
+    <li *ngIf="auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')">
+      <a routerLinkActive="active" routerLink="/dashboard" (click)="exibindoMenu=!exibindoMenu">Dashboard</a>
+    </li>
 
-  <ul class="navbar-menu" [hidden]="!exibindoMenu">
-    <li class="navbar-usuario">{{ auth.jwtPayload?.nome }}</li>
-    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')">
-      <a routerLink="/dashboard">Dashboard</a>
+    <li *ngIf="auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')">
+      <a routerLinkActive="active" routerLink="/lancamentos">Lancamentos</a>
     </li>
-    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')">
-      <a routerLink="/lancamentos">Lancamentos</a>
+
+    <li routerLinkActive="ativo" *ngIf="auth.temPermissao('ROLE_PESQUISAR_PESSOA')">
+      <a routerLinkActive="active" routerLink="/pessoas">Pessoas</a>
     </li>
-    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao('ROLE_PESQUISAR_PESSOA')">
-      <a routerLink="/pessoas">Pessoas</a>
+
+    <li routerLinkActive="ativo" *ngIf="auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')">
+      <a routerLinkActive="active" routerLink="/relatorios/lancamentos">Relatorios</a>
     </li>
-    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')">
-      <a routerLink="/relatorios/lancamentos">Relatorios</a>
-    </li>
+
     <li class="navbar-menuitem"><a href="javascript:;" (click)="logout()">Logout</a></li>
   </ul>
 
+  <div style="clear: both"></div>
 </nav>

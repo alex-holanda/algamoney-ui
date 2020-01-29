@@ -1,26 +1,22 @@
-<div class="container" style="max-width: 400px;">
+<div class="content">
+  <div class="login">
 
-  <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="login()">
+    <img src="assets/images/avatar.png" class="avatar" alt="Avatar"/>
 
-    <div class="ui-g ui-fluid">
-      <div class="ui-g-12">
-        <h1>Login</h1>
-      </div>
+    <h2>Login</h2>
 
-      <div class="ui-g-12">
-        <input type="email" pInputText placeholder="E-mail" formControlName="usuario">
-      </div>
+    <form autocomplete="off" [formGroup]="formulario" (ngSubmit)="login()">
 
-      <div class="ui-g-12">
-          <input type="password" pInputText placeholder="Senha" formControlName="senha">
-      </div>
+      <p>E-mail</p>
+      <input type="email" placeholder="Insira o e-mail" formControlName="usuario"/>
 
-      <div class="ui-g-12">
-          <p-button  type="submit" [disabled]="formulario.invalid" label="Login"
-            class="ui-button-primary" style="width: 100%"></p-button>
-      </div>
-    </div>
+      <p>Senha</p>
+      <input type="password" placeholder="********" formControlName="senha"/>
 
-  </form>
+      <input  type="submit" [disabled]="formulario.invalid" value="Entrar"/>
+      <a href="#">Forget Password</a>
 
+    </form>
+
+  </div>
 </div>
