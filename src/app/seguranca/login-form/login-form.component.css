@@ -16,7 +16,7 @@
 
   font-family: Arial, Helvetica, sans-serif;
   letter-spacing: 1px;
-  background: url('/assets/images/bg.jpg');
+  background: url('src/assets/images/bg.jpg');
   background-size: cover;
 }
 
