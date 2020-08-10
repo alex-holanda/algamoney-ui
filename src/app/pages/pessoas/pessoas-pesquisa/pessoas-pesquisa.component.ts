@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 
-import { LazyLoadEvent, MessageService, ConfirmationService } from 'primeng/components/common/api';
+import { LazyLoadEvent, MessageService, ConfirmationService } from 'primeng/api';
 
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { PessoaFiltro } from '../shared/pessoa-filtro.model';

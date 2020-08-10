@@ -2,7 +2,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
-import { MessageService } from 'primeng/components/common/api';
+import { MessageService } from 'primeng/api';
 
 import { CategoriaService } from '../../categorias/shared/categoria.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';

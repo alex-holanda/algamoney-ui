@@ -1,76 +1,72 @@
-<div class="container">
   <form (ngSubmit)="salvar()" [formGroup]="formulario" autocomplete="off">
-    <div class="ui-g">
-      <div class="ui-g-12">
+
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-field p-col-12">
         <h1>{{ editando ? 'Edição de' : 'Nova' }} Pessoa</h1>
       </div>
 
-      <div class="ui-g-12 ui-fluid">
+      <div class="p-field p-col-12 p-md-12">
         <label>Nome</label>
           <app-message [control]="formulario.get('nome')"
           error="required"
           text="Informe o nome"></app-message>
-        <input pInputText type="text" id="nome" formControlName="nome" class="ng-dirty ng-invalid"/>
+        <input pInputText type="text" id="nome" formControlName="nome">
       </div>
 
-      <div formGroupName="endereco">
-        <div class="ui-g-12 ui-md-9 ui-fluid">
+      <div formGroupName="endereco" class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col-12 p-md-5">
           <label>Logradouro</label>
           <input pInputText type="text" id="logradouro" formControlName="logradouro"/>
         </div>
 
-        <div class="ui-g-12 ui-md-3 ui-fluid">
+        <div class="p-field p-col-12 p-md-3">
           <label>Número</label>
           <input pInputText type="text" id="numero" formControlName="numero"/>
         </div>
 
-        <div class="ui-g-12 ui-md-4 ui-fluid">
+        <div class="p-field p-col-12 p-md-4">
           <label>Complemento</label>
           <input pInputText type="text" id="complemento" formControlName="complemento"/>
         </div>
 
-        <div class="ui-g-12 ui-md-4 ui-fluid">
+        <div class="p-field p-col-12 p-md-3">
           <label>Bairro</label>
           <input pInputText type="text" id="bairro" formControlName="bairro"/>
         </div>
 
-        <div class="ui-g-12 ui-md-4 ui-fluid">
+        <div class="p-field p-col-12 p-md-3">
           <label>CEP</label>
           <p-inputMask mask="99.999-999" id="cep" formControlName="cep"></p-inputMask>
         </div>
 
-        <div formGroupName="cidade">
-          <div class="ui-g-12 ui-md-6 ui-fluid" formGroupName="estado">
+          <div formGroupName="estado" class="p-field p-col-12 p-md-3" formGroupName="estado">
             <label>Estado</label>
-            <p-dropdown placeholder="Selecione..." [autoWidth]="true" [filter]="true"
+            <p-dropdown placeholder="Selecione..." [filter]="true"
               [options]="estados" formControlName="codigo"
               [(ngModel)]="estadoSelecionado" (onChange)="carregarCidades()"></p-dropdown>
           </div>
 
-          <div class="ui-g-12 ui-md-6 ui-fluid">
+          <div formGroupName="cidade" class="p-field p-col-12 p-md-3">
             <label>Cidade</label>
-            <p-dropdown placeholder="Selecione..." [autoWidth]="true" [filter]="true"
+            <p-dropdown placeholder="Selecione..." [filter]="true"
               [options]="cidades" formControlName="codigo" [disabled]="!estadoSelecionado"></p-dropdown>
           </div>
-        </div>
 
       </div>
 
-      <div class="ui-g-12">
+      <div class="p-field p-col-12">
         <p-panel header="Contatos">
           <app-pessoa-cadastro-contato [contatos]="formulario.value.contatos"></app-pessoa-cadastro-contato>
         </p-panel>
       </div>
 
-      <div class="ui-g-12">
-          <p-button [disabled]="formulario.invalid" type="submit" label="Salvar"
-            style="margin-right: 5px;"></p-button>
+      <div class="p-field p-col-12">
+          <p-button [disabled]="formulario.invalid" type="submit" label="Salvar"></p-button>
 
           <p-button type="button" label="Novo" class="ui-button-info"
-            (click)="novo()" style="margin-right: 5px;"></p-button>
+            (click)="novo()"></p-button>
 
           <a routerLink="/pessoas">Voltar para a pesquisa</a>
       </div>
     </div>
   </form>
-</div>

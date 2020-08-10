@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { MessageService } from 'primeng/components/common/api';
+import { MessageService } from 'primeng/api';
 
 import { Pessoa } from '../shared/pessoa.model';
 import { PessoaService } from '../shared/pessoa.service';

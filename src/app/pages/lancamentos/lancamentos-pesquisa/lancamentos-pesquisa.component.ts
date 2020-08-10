@@ -3,7 +3,7 @@ import { LancamentoFiltro } from '../shared/lancamento-filtro.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { LazyLoadEvent, MessageService, ConfirmationService } from 'primeng/components/common/api';
+import { LazyLoadEvent, MessageService, ConfirmationService } from 'primeng/api';
 
 import { LancamentoService } from '../shared/lancamento.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';

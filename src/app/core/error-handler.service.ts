@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { MessageService } from 'primeng/components/common/api';
-import { HttpErrorResponse } from '@angular/common/http';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root'
